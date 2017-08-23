@@ -531,7 +531,7 @@ class phpspider
     public function is_scan_page($url)
     {
         $parse_url = parse_url($url);
-        if (empty($parse_url['host']) || !in_array($parse_url['host'], self::$configs['domains'])) 
+        if (empty($parse_url['host']) || !in_array($parse_url['host'], self::$configs['domains']))
         {
             return false;
         }
@@ -1005,7 +1005,7 @@ class phpspider
     public function do_collect_page() 
     {
         while( $queue_lsize = $this->queue_lsize() )
-        { 
+        {
             // 如果是主任务
             if (self::$taskmaster) 
             {
@@ -1099,7 +1099,8 @@ class phpspider
 
         requests::$input_encoding = null;
         $html = $this->request_url($url, $link);
-
+var_dump($url);
+        var_dump($html);
         if (!$html) 
         {
             return false;
@@ -2255,7 +2256,7 @@ class phpspider
         {
             queue::incr("collected_urls_num"); 
         }
-        else 
+        else
         {
             self::$collected_urls_num++;
         }

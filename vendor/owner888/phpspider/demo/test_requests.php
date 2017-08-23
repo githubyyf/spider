@@ -23,7 +23,7 @@ use phpspider\core\selector;
 //print_r($data);
 
 $html = requests::get('http://www.qiushibaike.com/article/118914171');
-//echo $html;
-//exit;
+echo $html;
+exit;
 $data = selector::select($html, "div.author", "css");
 echo $data;

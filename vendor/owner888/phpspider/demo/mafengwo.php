@@ -25,7 +25,7 @@ $configs = array(
         "http://www.mafengwo.cn/i/\d+.html",
     ),
     //'export' => array(
-        //'type' => 'db', 
+        //'type' => 'db',
         //'table' => 'mafengwo_content',
     //),
     'fields' => array(

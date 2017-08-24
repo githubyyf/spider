@@ -3,11 +3,9 @@ require './vendor/owner888/phpspider/autoloader.php';
 use phpspider\core\phpspider;
 use phpspider\core\requests;
 
-
-$info = requests::get('http://sh.lianjia.com/ershoufang');
-var_dump($info);die();
-
-
+//$html=requests::get('http://sh.lianjia.com/ershoufang');
+//var_dump($html);
+//die();
 /* Do NOT delete this comment */
 /* 不要删除这段注释 */
 
@@ -23,7 +21,6 @@ $configs = array(
         'http://sh.lianjia.com/ershoufang',
     ],
     'list_url_regexes'    => [
-//        "http://sh.lianjia.com/ershoufang/\w+",         // 浦东区
         "http://www.mafengwo.cn/\\w+/d\\d+",   // 房源列表页
     ],
     'content_url_regexes' => [
@@ -64,61 +61,35 @@ $spider = new phpspider($configs);
 $spider->on_start = function ($phpspider) {
     requests::set_header("Referer", "http://sh.lianjia.com/");
     requests::set_header("Upgrade-Insecure-Requests", 1);
-    requests::set_header("Referer", "http://sh.lianjia.com/");
-    requests::set_header('User-Agent',"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36");
+    requests::set_header('User-Agent',
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36");
 };
 
-$spider->on_status_code = function($status_code, $url, $content, $phpspider)
-{
-    // 如果状态码为429，说明对方网站设置了不让同一个客户端同时请求太多次
-    if ($status_code == '429')
-    {
-        // 将url插入待爬的队列中,等待再次爬取
-        $phpspider->add_url($url);
-        // 当前页先不处理了
-        return false;
-    }
-    // 不拦截的状态码这里记得要返回，否则后面内容就都空了
-    return $content;
-};
 $spider->on_scan_page = function ($page, $content, $phpspider) {
     $area = [
         ['name' => 'jiading'],
         ['name' => 'minhang'],
-//        ['name'=>'baoshan'],
-//        ['name'=>'xuhui'],
-//        ['name'=>'putuo'],
-//        ['name'=>'yangpu'],
-//        ['name'=>'changning'],
-//        ['name'=>'songjiang'],
-//        ['name'=>'jiading'],
+        ['name' => 'baoshan'],
+        ['name' => 'xuhui'],
+        ['name' => 'putuo'],
+        ['name' => 'yangpu'],
+        ['name' => 'changning'],
+        ['name' => 'songjiang'],
+        ['name' => 'jiading'],
     ];
 //限制获取的数据的区
     foreach ($area as $value) {
-        $url = "http://sh.lianjia.com/ershoufang/{$value['name']}";
+        $url = $page['url'] . '/' . $value['name'];
         $phpspider->add_url($url);
     }
 };
-$spider->on_list_page = function ($page, $content, $phpspider) {
-    $area = [
-        ['name' => 'jiading'],
-        ['name' => 'minhang'],
-//        ['name'=>'baoshan'],
-//        ['name'=>'xuhui'],
-//        ['name'=>'putuo'],
-//        ['name'=>'yangpu'],
-//        ['name'=>'changning'],
-//        ['name'=>'songjiang'],
-//        ['name'=>'jiading'],
-    ];
-//限制获取的数据的区
-    foreach ($area as $value) {
-        for ($i = 0; $i <= 100; $i++) {
-            $url2 = "http://sh.lianjia.com/ershoufang/{$value['name']}/d{$i}";
-            $phpspider->add_url($url2);
-        }
-    }
-};
+//$spider->on_list_page = function ($page, $content, $phpspider) {
+////限制获取的数据的区
+//    for ($i = 0; $i <= 100; $i++) {
+//        $url2 = $page['url'] . '/d' . $i;
+//        $phpspider->add_url($url2);
+//    }
+//};
 
 
 $spider->start();

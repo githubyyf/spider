@@ -18,6 +18,8 @@ Thumbs.db
 # composer itself is not needed
 composer.phar
 
+# Mac DS_Store Files
+.DS_Store
 
 # phpunit itself is not needed
 phpunit.phar
@@ -27,4 +29,15 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 
-**/nohup.out
+#yii config
+config/console-local.php
+config/main-local.php
+config/params-local.php
+
+#apidoc
+doc
+
+# debug files list
+**/LocalController.php
+
+# t

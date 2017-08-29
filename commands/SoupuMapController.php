@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: haowang
- * Date: 2016/12/20
+ * Date: 1016/12/10
  * Time: 下午4:42
  */
 
@@ -41,7 +41,7 @@ class SoupuMapController extends Controller
         $client = new Client();
         $response = $client->request('get', $url);
         $html = $response->getBody();
-        if ($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 100) {
             sleep(60);
             $this->actionIndex();
         }
@@ -99,7 +99,7 @@ class SoupuMapController extends Controller
         $client = new Client();
         $response = $client->request('get', $url);
         $html = $response->getBody();
-        if ($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 100) {
             static::$FIRST_ERROR[] = $url;
             var_dump($url);
             return false;
@@ -120,13 +120,29 @@ class SoupuMapController extends Controller
 
         $cityNeedDatas = $cityJsonData['ds'];
         foreach ($cityNeedDatas as $needData) {
+            if (static::$PROVINCE_NAME == '广东' && in_array($needData['city'], [
+                    '深圳',
+                    '广州',
+                    '东莞',
+                    '佛山',
+                    '中山',
+                    '惠州',
+                    '江门',
+                    '珠海',
+                    '肇庆',
+                    '湛江',
+                    '韶关',
+                    '清远',
+                    '阳江'
+                ])
+            ) {
+                continue;
+            }
             if (!$this->CountryData($needData['city'])) {
-                sleep(60);
+                sleep(10);
                 $this->CountryData($needData['city']);
             }
         }
-
-        sleep(60);
         return true;
     }
 
@@ -144,7 +160,7 @@ class SoupuMapController extends Controller
         $response = $client->request('get', $url);
         $html = $response->getBody();
 
-        if ($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 100) {
             static::$FIRST_ERROR[] = $url;
             return false;
         }
@@ -169,7 +185,6 @@ class SoupuMapController extends Controller
                 $this->ProjectData($areaneedData['area']);
             }
         }
-        sleep(60);
         return true;
 
     }
@@ -189,7 +204,7 @@ class SoupuMapController extends Controller
         $response = $client->request('get', $url);
         $html = $response->getBody();
 
-        if ($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 100) {
             static::$FIRST_ERROR[] = $url;
             return false;
         }
@@ -227,7 +242,7 @@ class SoupuMapController extends Controller
             $model->url = 'http://www.soupu.com/UIPro/ProjectDetails.aspx?projectid=' . $projectNeedData['id'];
             var_dump($model->save());
         }
-        sleep(60);
+        sleep(10);
         return true;
 
     }

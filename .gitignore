@@ -35,6 +35,8 @@ config/params-local.php
 #apidoc
 doc
 
+#data load form web json
+/data
 # debug files list
 **/LocalController.php
 

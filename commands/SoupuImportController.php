@@ -41,6 +41,7 @@ class SoupuImportController extends Controller
                         $needDir = $childDir . $childFileName;
                         $jsonFile = file_get_contents($needDir);
 
+                        var_dump($needDir);
                         if (!empty($jsonFile)) {
                             //获取json数据开始入库
                             $content = Json::decode($jsonFile);
@@ -61,7 +62,17 @@ class SoupuImportController extends Controller
                                 $model->city_name = $mapModel->city_name;
                                 $model->area_name = $mapModel->area_name;
                                 $model->type = '商城';
-                                $model->location = $mapModel->province_name . $mapModel->city_name . $mapModel->area_name . $mapModel->address;
+
+                                $fourth = ['北京市', '上海市', '重庆市', '天津市'];
+                                if (in_array($mapModel->city_name, $fourth)) {
+                                    $model->province_name = $mapModel->city_name;
+                                    $model->location = $mapModel->city_name . $mapModel->area_name . $mapModel->address;
+                                } else {
+                                    $model->province_name = $mapModel->province_name;
+                                    $model->location = $mapModel->province_name . $mapModel->city_name . $mapModel->area_name . $mapModel->address;
+                                }
+
+
                                 $model->location_detail = $model->location;
                                 $info = explode('年', $data['data']);
                                 $model->built_year = ($data['data'] == '已开业' || $data['data'] == '局部开业') ? 1 : (isset($info[1]) ? $info[0] : 0);

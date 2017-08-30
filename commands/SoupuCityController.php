@@ -55,11 +55,11 @@ class SoupuCityController extends Controller
             ],
         ];
         foreach ($types as $key => $type) {
-            $url = static::URL . '&xzid=' . $type['type'];
-            $client = new Client();
-            $response = $client->request('get', $url);
             $page = 1;
             do {
+                $url = static::URL . '&xzid=' . $type['type'] . '&page=' . $page;
+                $client = new Client();
+                $response = $client->request('get', $url);
                 $html = $response->getBody();
                 $data = html5qp((string)$html,
                     'body > div.area_15.clearfix > div.col_g.clearfix > div.col_g_l.c_fl')->children('body > div.area_15.clearfix > div.col_g.clearfix > div.col_g_l.c_fl > div.table_style2'); //获取总记录数量
@@ -96,7 +96,7 @@ class SoupuCityController extends Controller
                     mkdir($dir, 0777, true); // 如果不存在则创建
                 }
                 file_put_contents($dir . $page . '.json', $jsonData);
-                $page += 1;
+                $page = $page + 1;
                 sleep(20);
             } while ($page <= $type['page']);
         }

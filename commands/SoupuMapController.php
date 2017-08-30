@@ -41,7 +41,7 @@ class SoupuMapController extends Controller
         $client = new Client();
         $response = $client->request('get', $url);
         $html = $response->getBody();
-        if ($response->getStatusCode() != 100) {
+        if ($response->getStatusCode() != 200) {
             sleep(60);
             $this->actionIndex();
         }
@@ -55,6 +55,7 @@ class SoupuMapController extends Controller
 
             $ProvinceJsonData = Json::decode($html);
             $needDatas = $ProvinceJsonData['ds'];
+
             foreach ($needDatas as $needDataData) {
                 if (in_array($needDataData['province'], $fourth)) {
                     static::$PROVINCE_NAME = $needDataData['province'];
@@ -94,12 +95,11 @@ class SoupuMapController extends Controller
      */
     public function CityData($name)
     {
-        static::$CITY_NAME = $name;
         $url = static::URL . '?action=CityData&province=' . $name;
         $client = new Client();
         $response = $client->request('get', $url);
         $html = $response->getBody();
-        if ($response->getStatusCode() != 100) {
+        if ($response->getStatusCode() != 200) {
             static::$FIRST_ERROR[] = $url;
             var_dump($url);
             return false;
@@ -120,24 +120,12 @@ class SoupuMapController extends Controller
 
         $cityNeedDatas = $cityJsonData['ds'];
         foreach ($cityNeedDatas as $needData) {
-            if (static::$PROVINCE_NAME == '广东' && in_array($needData['city'], [
-                    '深圳',
-                    '广州',
-                    '东莞',
-                    '佛山',
-                    '中山',
-                    '惠州',
-                    '江门',
-                    '珠海',
-                    '肇庆',
-                    '湛江',
-                    '韶关',
-                    '清远',
-                    '阳江'
-                ])
-            ) {
-                continue;
-            }
+            static::$CITY_NAME=$needData['city'];
+            //如果省和城市数据已经存在就不再获取下面的区
+//            $cityInfo = SoupuMapData::findOne(['city_name'=>$needData['city'].'市','province_name'=>static::$PROVINCE_NAME.'省']);
+//            if (!empty($cityInfo)) {
+//                continue;
+//            }
             if (!$this->CountryData($needData['city'])) {
                 sleep(10);
                 $this->CountryData($needData['city']);
@@ -160,7 +148,7 @@ class SoupuMapController extends Controller
         $response = $client->request('get', $url);
         $html = $response->getBody();
 
-        if ($response->getStatusCode() != 100) {
+        if ($response->getStatusCode() != 200) {
             static::$FIRST_ERROR[] = $url;
             return false;
         }
@@ -204,7 +192,7 @@ class SoupuMapController extends Controller
         $response = $client->request('get', $url);
         $html = $response->getBody();
 
-        if ($response->getStatusCode() != 100) {
+        if ($response->getStatusCode() != 200) {
             static::$FIRST_ERROR[] = $url;
             return false;
         }
@@ -240,7 +228,7 @@ class SoupuMapController extends Controller
             $model->coordinate_y = $projectNeedData['lng'];
             $model->address = $projectNeedData['address'];
             $model->url = 'http://www.soupu.com/UIPro/ProjectDetails.aspx?projectid=' . $projectNeedData['id'];
-            var_dump($model->save());
+            $model->save();
         }
         sleep(10);
         return true;

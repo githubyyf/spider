@@ -39,3 +39,24 @@ page=分页信息
 ./yii soupu-city //将列表数据存为json文件，文件再data/soupu/项目类型ID/page
 
 将数据入库，根据实际需要将json文件中的数据和表soupu_map_data中的数据结合，根据名字查找
+
+## 商多多数据
+
+1. 根据地图页的接口获取json数据  ./yii shang-duo-duo-json
+
+通过接口：POST http://www.shangdd.com/user_website/house/newMapList.do
+post提交，
+参数：--获取全国所有数据
+{
+  "params":{
+    "regionId": 0
+  }
+}
+返回的每个省的数据中有regionId，获取市的数据就传对应省的regionId；
+
+数据存储的格式的是在商多多文件中，省的名称/市的名称.json
+
+
+2. 将json数据放入数据库中  ./yii shang-duo-duo-import
+
+在系统集客点中类型设置为“商场”

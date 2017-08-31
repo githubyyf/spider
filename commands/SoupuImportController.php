@@ -77,6 +77,10 @@ class SoupuImportController extends Controller
                                 $info = explode('年', $data['data']);
                                 $model->built_year = ($data['data'] == '已开业' || $data['data'] == '局部开业') ? 1 : (isset($info[1]) ? $info[0] : 0);
                                 $areaInfo = explode('万', $data['area'])[0];
+                                if (!is_numeric($areaInfo)){
+                                    $areaInfo = (explode('㎡', $data['area'])[0])/10000;
+                                }
+
                                 $model->building_area = $areaInfo;
                                 $model->remark = trim($data['desc']);
                                 $model->contain = $data['type'];

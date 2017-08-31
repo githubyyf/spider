@@ -106,8 +106,7 @@ class SystemGatheringPlace extends \yii\db\ActiveRecord
                     'property_company',
                     'property_developer',
                     'property_management_fee_detail',
-                    'contain',
-                    'remark'
+                    'contain'
                 ],
                 'string',
                 'max' => 255

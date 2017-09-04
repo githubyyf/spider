@@ -45,7 +45,7 @@ class ShangDuoDuoJsonController extends Controller
         $code = $response->getStatusCode();
         if ($code != 200) {
             sleep(20);
-            $this->getProvince();
+            $this->actionIndex();
         }
         $html = $response->getBody();
         $json = Json::decode($html);

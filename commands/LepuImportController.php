@@ -35,6 +35,7 @@ class LepuImportController extends Controller
                     $content = json_decode($jsonFile);
                     if (!empty($content) && !empty($content->data) && !empty($content->data->info)&&!empty($content->data->info->list)){
                         foreach ($content->data->info->list as $item) {
+//                            var_dump($item->day_money[0]);die();
                             //数据入库
                             $model = new SystemSurroundingShop();
                             $model->province_name ='北京市';
@@ -66,6 +67,7 @@ class LepuImportController extends Controller
 //                            $model->lease_state =$item->state;
                             $model->building_area =$model->square;
                             $model->use_area =$model->square;
+                            $model->unit_rent = $item->day_money[0]??0;
 
                             if (!empty($item->cost) && is_numeric($item->cost[0])){
                                 if ($item->cost[0][1]=='万'){

@@ -15,8 +15,8 @@ use yii\db\ActiveRecord;
  * @property string  $location
  * @property string  $coordinate_y
  * @property string  $coordinate_x
- * @property string  $branchName
- * @property string  $shopName
+ * @property string  $branch_name
+ * @property string  $shop_name
  * @property integer $province
  * @property string  $province_name
  * @property integer $city
@@ -125,8 +125,8 @@ class SystemCompetitionShop extends ActiveRecord
                     'location',
                     'coordinate_y',
                     'coordinate_x',
-                    'branchName',
-                    'shopName',
+                    'branch_name',
+                    'shop_name',
                     'province_name',
                     'city_name',
                     'area_name',
@@ -161,8 +161,8 @@ class SystemCompetitionShop extends ActiveRecord
             'location'                 => '位置',
             'coordinate_y'             => '坐标Y(经度）',
             'coordinate_x'             => '坐标X（纬度）',
-            'branchName'               => '分店名',
-            'shopName'                 => '店名',
+            'branch_name'               => '分店名',
+            'shop_name'                 => '店名',
             'province'                 => '省',
             'province_name'            => '省的名称',
             'city'                     => '市',

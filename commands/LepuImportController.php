@@ -67,7 +67,7 @@ class LepuImportController extends Controller
 //                            $model->lease_state =$item->state;
                             $model->building_area =$model->square;
                             $model->use_area =$model->square;
-                            $model->unit_rent = $item->day_money[0]??0;
+                            $model->unit_rent = $item->day_money[0]?$item->day_money[0]:0;
 
                             if (!empty($item->cost) && is_numeric($item->cost[0])){
                                 if ($item->cost[0][1]=='万'){

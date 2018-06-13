@@ -82,12 +82,12 @@ class SoupuCityController extends Controller
                     $tempDesc = explode('：', $needType);
                     $needData[] = [
                         'name'    => trim($name),
-                        'data'    => $tempDate[1]??null,
-                        'type'    => $tempType[1]??null,
-                        'area'    => $tempArea[1]??null,
-                        'desc'    => $tempDesc[1]??null,
+                        'data'    => $tempDate[1]?$tempDate[1]:null,
+                        'type'    => $tempType[1]?$tempType[1]:null,
+                        'area'    => $tempArea[1]?$tempArea[1]:null,
+                        'desc'    => $tempDesc[1]?$tempDesc[1]:null,
                         'href'    => 'http://www.soupu.com/UIPro/' . $href,
-                        'data_id' => explode('=', $href)[1]??0,
+                        'data_id' => explode('=', $href)[1]?explode('=', $href)[1]:0,
                     ];
                 }
                 $jsonData = Json::encode($needData);

@@ -34,7 +34,7 @@ class ImportController extends Controller
             if (in_array($cityName,$four)){
                 $provinceName = $cityName; //省
             }else{
-                $provinceName=$city->province_name??'';
+                $provinceName=$city->province_name?$city->province_name:'';
             }
             $districtName = District::findOne($region->district_id)->name; //区
             $dir = CONSOLE_HOME . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR .'dazhong' . DIRECTORY_SEPARATOR. $region->city_id . DIRECTORY_SEPARATOR . $region->district_id . DIRECTORY_SEPARATOR . $region->region_id . DIRECTORY_SEPARATOR;

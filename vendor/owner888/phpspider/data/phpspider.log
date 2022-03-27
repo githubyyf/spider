@@ -1,0 +1,150 @@
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:47:52 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:47:52 [info] Find pages: 1 
+2017-08-22 17:47:52 [info] Waiting for collect pages: 1 
+2017-08-22 17:47:52 [info] Collected pages: 0 
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:53:12 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:53:12 [info] Find pages: 1 
+2017-08-22 17:53:12 [info] Waiting for collect pages: 1 
+2017-08-22 17:53:12 [info] Collected pages: 0 
+2017-08-22 17:53:13 [error] Failed to download page http://www.qiushibaike.com/, retry(1)
+2017-08-22 17:53:13 [error] HTTP CODE: 503
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:53:41 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:53:41 [info] Find pages: 1 
+2017-08-22 17:53:41 [info] Waiting for collect pages: 1 
+2017-08-22 17:53:41 [info] Collected pages: 0 
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:55:54 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:55:54 [info] Find pages: 1 
+2017-08-22 17:55:54 [info] Waiting for collect pages: 1 
+2017-08-22 17:55:54 [info] Collected pages: 0 
+2017-08-22 17:55:56 [error] Failed to download page http://www.qiushibaike.com/, retry(1)
+2017-08-22 17:55:56 [error] HTTP CODE: 503
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:57:41 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:57:41 [info] Find pages: 1 
+2017-08-22 17:57:41 [info] Waiting for collect pages: 1 
+2017-08-22 17:57:41 [info] Collected pages: 0 
+2017-08-22 17:57:42 [error] Failed to download page http://www.qiushibaike.com/, retry(1)
+2017-08-22 17:57:42 [error] HTTP CODE: 503
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:58:57 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:58:57 [info] Find pages: 1 
+2017-08-22 17:58:57 [info] Waiting for collect pages: 1 
+2017-08-22 17:58:57 [info] Collected pages: 0 
+2017-08-22 17:58:58 [error] Failed to download page http://www.qiushibaike.com/, retry(1)
+2017-08-22 17:58:58 [error] HTTP CODE: 503
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 17:59:53 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 17:59:53 [info] Find pages: 1 
+2017-08-22 17:59:53 [info] Waiting for collect pages: 1 
+2017-08-22 17:59:53 [info] Collected pages: 0 
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 18:00:34 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 18:00:34 [info] Find pages: 1 
+2017-08-22 18:00:34 [info] Waiting for collect pages: 1 
+2017-08-22 18:00:34 [info] Collected pages: 0 
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 18:01:56 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 18:01:56 [info] Find pages: 1 
+2017-08-22 18:01:56 [info] Waiting for collect pages: 1 
+2017-08-22 18:01:56 [info] Collected pages: 0 
+2017-08-22 18:01:57 [error] Failed to download page http://www.qiushibaike.com/, retry(1)
+2017-08-22 18:01:57 [error] HTTP CODE: 503
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 18:02:19 [debug] Find scan page: http://www.qiushibaike.com/
+
+[ 糗事百科 Spider ] is started...
+
+  * PHPSpider Version: 2.0.7
+  * Documentation: https://doc.phpspider.org
+  * Task Number: 1
+
+Input "php index.php stop" to quit. Start success.
+
+2017-08-22 18:08:35 [debug] Find scan page: http://www.qiushibaike.com/
+2017-08-22 18:08:35 [info] Find pages: 1 
+2017-08-22 18:08:35 [info] Waiting for collect pages: 1 
+2017-08-22 18:08:35 [info] Collected pages: 0 

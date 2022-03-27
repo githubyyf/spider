@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+
+    <title>コンピ指数 | 極ウマ・プレミアム</title>
+
+    <meta name="keywords" content="極ウマ・プレミアム,プレミアム競馬,日刊スポーツ競馬,極ウマ,競馬,予想,コンピ,有料,日刊スポーツ新聞社,日刊,ニッカン,ニッカンスポーツ・コム">
+    <meta name="description" content="極ウマ・プレミアムは、日刊スポーツ新聞社が提供する有料会員サイトです。毎週末に騎手・調教師インタビューを動画で配信しています！">
+
+    <link rel="shortcut icon" href="/goku-uma/favicon.ico">
+    <!-- smartphone link -->
+    <link rel="alternate" media="only screen and (max-width: 640px)"
+          href="https://p.nikkansports.com/goku-uma/member/m/compi/compi_list.zpl">
+    <link rel="stylesheet" href="/goku-uma/css/common.css?update=20210614">
+    <link rel="stylesheet" href="/goku-uma/css/renewal2020.css?update=20210614">
+    <style type="text/css">
+        .compi-area p {
+            line-height: 1.6em;
+            margin-bottom: 1em;
+        }
+
+        #nankanCompiBox .nankanCompiBtn {
+            background-position: 0 0.3em;
+            float: right;
+            line-height: 1.9;
+            background: url("/goku-uma/img/arrow_gray-s.png") no-repeat scroll 5px 6px transparent;
+            font-size: 80%;
+            margin: 0;
+            padding: 0 3px 0 20px;
+        }
+
+        .reloadBox {
+            margin-bottom: 20px;
+            border-top: 1px dotted #8197a7;
+            border-bottom: 1px dotted #8197a7;
+            padding: 10px 0;
+        }
+
+        .reloadBox p {
+            margin-bottom: 0;
+        }
+
+        .reloadBox p.text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="/goku-uma/js/jquery.min.js"></script>
+    <!-------- 以下的中情報用 -------->
+    <script src="/goku-uma/js/jquery/jquery.autoChange.js"></script>
+    <!-------- 以下TICKER用 -------->
+    <script src="/goku-uma/js/ticker.js"></script>
+    <!-- piano -->
+    <script type="text/javascript" src="//csm.cxpublic.com/nikkansports.js"></script>
+    <meta name="cXenseParse:pageclass" content=""/>
+    <meta property="article:published_time" content=""/>
+    <meta property="article:modified_time" content=""/>
+    <meta name="cXenseParse:articleid" content=""/>
+    <meta name="cXenseParse:nks-pubday" content=""/>
+    <meta name="cXenseParse:nks-pubmonth" content=""/>
+    <meta name="cXenseParse:nks-pubyear" content=""/>
+    <meta name="cXenseParse:nks-keywords" content="" data-separator=","/>
+    <meta name="cXenseParse:nks-category" content="" data-separator=","/>
+
+    <script>
+        // 変数設定
+        var pianoPathname = location.pathname;
+        var pianoArticleFlg = false;
+        // パラメータ取得（クエリ文字列）
+        var pianoQueryStr = location.search.substr(1).split('&');
+        var pianoQueryKey = null;
+        var pianoParams = [];
+        for (var i = 0; i < pianoQueryStr.length; i++) {
+            pianoQueryKey = pianoQueryStr[i].split("=");
+            pianoParams[pianoQueryKey[0]] = pianoQueryKey[1];
+        }
+        // 記事の種類
+        var pageclass = 'frontpage';
+        var pianoArticleFileList = [
+            '/special/index.zpl',
+            '/special/graderace/index.zpl',
+            '/special/graderace/compi.zpl',
+            '/special/graderace/history.zpl',
+            '/yosou/index.zpl',
+            '/syussou/index.zpl',
+            '/douga/index.zpl',
+            '/douga/douga.zpl',
+            '/news/yosou_list.zpl',
+            '/news/yosou.zpl',
+            '/tekichu/',
+            'column.zpl',
+            'column_saiten.zpl',
+            'column_technical6.zpl',
+            'column.zpl',
+            'news.zpl',
+            'article.zpl',
+        ];
+        var pianoArticleFileFlg = false;
+        pianoArticleFileList.forEach(function (val, idx) {
+            if (pianoPathname.indexOf(val) !== -1) {
+                pianoArticleFileFlg = true;
+            }
+        })
+        if (pianoArticleFileFlg) {
+            pageclass = 'article';
+            pianoArticleFlg = true;
+        }
+        // 記事公開日
+        var published_time;
+        if (document.getElementsByTagName('head')[0].children.nsTimeStamp) {
+            published_time = document.getElementsByTagName('head')[0].children.nsTimeStamp.content;
+        }
+        // 記事更新日
+        var modified_time;
+        if (document.getElementsByTagName('head')[0].children.nsTimeStamp) {
+            modified_time = document.getElementsByTagName('head')[0].children.nsTimeStamp.content;
+        }
+        // 記事ID
+        var articleid;
+        if (pianoParams.id != null) {
+            articleid = pianoParams.id;
+        }
+        // 発行日、発行月、発行年
+        var nks_pubday, nks_pubmonth, nks_pubday;
+        var pianoTs = Date.parse(published_time);
+        var pianoDt = new Date(pianoTs);
+        var pianoYear = pianoDt.getFullYear();
+        var pianoMonth = ("0" + (pianoDt.getMonth() + 1)).slice(-2);
+        var pianoDate = ("0" + pianoDt.getDate()).slice(-2);
+        var pianoYYYY = pianoYear;
+        var pianoYYYYMM = pianoYear + pianoMonth;
+        var pianoYYYYMMDD = pianoYear + pianoMonth + pianoDate;
+        if (isNaN(pianoYYYY)) {
+            pianoYYYY = ""
+        }
+        if (isNaN(pianoYYYYMM)) {
+            pianoYYYYMM = ""
+        }
+        if (isNaN(pianoYYYYMMDD)) {
+            pianoYYYYMMDD = ""
+        }
+        // キーワード
+        var nks_keywords;
+        var nks_keywords_array;
+        if (document.getElementsByTagName('head')[0].children.keywords) {
+            nks_keywords_array = document.getElementsByTagName('head')[0].children.keywords.content.split(",");
+            var nks_keywords_array_result = nks_keywords_array.filter(function (value) {
+                if (!/日刊スポーツ|ニッカン|nikkansports|日刊|スポーツ新聞|極ウマ・プレミアム|極ウマ|プレミアム競馬|有料|競馬予想/.test(value)) {
+                    return value
+                }
+            })
+            nks_keywords = nks_keywords_array_result.join(',');
+        }
+        // カテゴリ
+        var nks_category;
+        var pianoCategory = location.pathname.replace(/\/goku-uma/, '').split("/");
+        pianoCategory.shift();
+        pianoCategory.pop();
+        var pianoCategoryCustom = [];
+        var cat = '';
+        for (var i = 0; i < pianoCategory.length; i++) {
+            //if(pianoCategory[i] == 'news'){continue;}
+            cat += i == 0 ? pianoCategory[i] : '/' + pianoCategory[i];
+            pianoCategoryCustom.push(cat);
+        }
+        nks_category = pianoCategoryCustom.map(function (pcc, idx) {
+            return pcc;
+        }).join(',');
+        if (nks_category.length == 0) {
+            nks_category = 'index'
+        }
+
+        $(function () {
+            $("meta[name ='cXenseParse:pageclass']").attr('content', pageclass);
+            if (pianoArticleFlg) {
+                $("#articleArea").addClass('cXenseParse');
+                $("meta[property ='article:published_time']").attr('content', published_time);
+                $("meta[property ='article:modified_time']").attr('content', modified_time);
+                $("meta[name ='cXenseParse:articleid']").attr('content', articleid);
+                $("meta[name ='cXenseParse:nks-pubday']").attr('content', pianoYYYYMMDD);
+                $("meta[name ='cXenseParse:nks-pubmonth']").attr('content', pianoYYYYMM);
+                $("meta[name ='cXenseParse:nks-pubyear']").attr('content', pianoYYYY);
+            } else {
+                $("meta[property ='article:published_time']").remove();
+                $("meta[property ='article:modified_time']").remove();
+                $("meta[name ='cXenseParse:articleid']").remove();
+                $("meta[name ='cXenseParse:nks-pubday']").remove();
+                $("meta[name ='cXenseParse:nks-pubmonth']").remove();
+                $("meta[name ='cXenseParse:nks-pubyear']").remove();
+            }
+            $("meta[name ='cXenseParse:nks-keywords']").attr('content', nks_keywords);
+            $("meta[name ='cXenseParse:nks-category']").attr('content', nks_category);
+        });
+    </script>
+
+    <!-- Composer -->
+    <script>
+        (function (src) {
+            var a = document.createElement("script");
+            a.type = "text/javascript";
+            a.async = true;
+            a.src = src;
+            var b = document.getElementsByTagName("script")[0];
+            b.parentNode.insertBefore(a, b)
+        })("//experience-ap.piano.io/xbuilder/experience/load?aid=QQlagLHspj");
+    </script>
+    <!--[if lt IE 9]>
+    <script src="/goku-uma/js/html5shiv.js"></script>
+    <script src="/goku-uma/js/selectivizr-min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="compi" class="premium">
+<!-- ▼google analitics -->
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-PP8FXC"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({
+        'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+    });
+    var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src =
+        '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-PP8FXC');</script>
+<!-- End Google Tag Manager -->
+<!-- ▲google analitics -->
+<noscript id="noJsMessage">
+    お客様のブラウザはジャバスクリプト（JavaScript）に対応していないか無効になっています。詳しくは<a href="https://www.nikkansports.com/policy/sitepolicy.html">サイトポリシー</a>をご覧ください。
+</noscript>
+
+<!---------------- ▼wrapper ---------------->
+<div id="wrapper">
+
+    <!-------- ▼header -------->
+    <header id="siteHeader">
+        <h1><a href="/goku-uma/member/index.zpl"><img src="/goku-uma/img/logo_gokuuma2.gif" width="310" height="80"
+                                                      alt="極うま プレミアム"/></a></h1>
+
+        <!-- ▼的中情報テロップ -->
+        <div id="tekichuBoard">
+            <a href="/goku-uma/member/tekichu/">
+                <dl>
+                    <dt>的中情報</dt>
+                    <dd>
+                        <ul id="tekichuTxt">
+                            <li>田中洋平が27日中山11Rで馬連1万1920円的中！</li>
+                            <li>太田記者が27日阪神6Rで3連単1万1560円的中！</li>
+                            <li>海外コラムでドバイターフ3連単1万1850円的中！</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </a>
+        </div>
+        <!-- ▲的中情報テロップ -->
+
+    </header>
+    <!-------- ▲header -------->
+
+    <!-------- ▼contents -------->
+    <div id="contents">
+
+        <!-- ▼mainSubNavi -->
+        <nav id="mainSubNavi" class="clearfix">
+            <ul class="mainSub-nav">
+                <li class="ai"><a href="/goku-uma/member/ai/">ＡＩ予想</a></li>
+                <li class="compi"><a href="/goku-uma/member/compi/compi_list.zpl">コンピ予想</a></li>
+                <li class="pdf"><a href="/goku-uma/member/race/pdf_list_top.zpl?y=2022&wk=13">ＰＤＦ出走表</a></li>
+                <li class="tetsuzo"><a href="/goku-uma/member/tetsuzo/column.zpl?topic_id=10063">哲三塾</a></li>
+                <li class="chihou"><a href="/goku-uma/member/chihou/">地方競馬</a></li>
+            </ul>
+        </nav>
+        <!-- ▲mainSubNavi -->
+
+        <!-- ▼ticker -->
+        <div class="ticker" rel="slide">
+            <ul>
+                <li><a href="/goku-uma/member/column/column.zpl?topic_id=10084"
+                       onclick="dataLayer.push({'event': 'paid_top_List', 'eventLabel':'ＰＣ有料ティッカー1'});">関西記者予想bet
+                    kansaiがドバイターフで3連単1万1850円ほか的中！</a></li>
+                <li><a href="/goku-uma/member/column/column.zpl?topic_id=10076"
+                       onclick="dataLayer.push({'event': 'paid_top_List', 'eventLabel':'ＰＣ有料ティッカー2'});">娘２人と３年半ぶりに再会　ドバイでとっても幸せだよ／ミルコ魂</a>
+                </li>
+                <li><a href="/goku-uma/member/news/article.zpl?topic_id=1&id=202203240000476&year=2022&month=3&day=24"
+                       onclick="dataLayer.push({'event': 'paid_top_List', 'eventLabel':'ＰＣ有料ティッカー3'});">【桜花賞特集号】ナミュール新女王か２歳女王サークルオブライフ巻き返すか　29日から順次発売</a>
+                </li>
+                <li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10124"
+                       onclick="dataLayer.push({'event': 'paid_top_List', 'eventLabel':'ＰＣ有料ティッカー4'});">ナミュールが横綱昇進！＝牝馬部門／有力3歳馬情報</a>
+                </li>
+                <li><a href="/goku-uma/member/syubobahaku/index.zpl"
+                       onclick="dataLayer.push({'event': 'paid_top_List', 'eventLabel':'ＰＣ有料ティッカー5'});">2022年の種牡馬を紹介!</a>
+                </li>
+            </ul>
+        </div>
+        <!-- ▲ticker -->
+
+        <!-- ▼globalMenu -->
+        <!-- fullPath：/goku-uma/ -->
+        <nav id="globalMenu">
+            <ul id="normal" class="dropmenu">
+                <li class="menu"><a href="/goku-uma/member/news/yosou_list.zpl">予想</a>
+                    <ul>
+                        <li><a href="/goku-uma/member/news/yosou_list.zpl">記者予想一覧</a></li>
+                        <li><a href="/goku-uma/member/treasurebox/index.zpl">トレジャーボックス</a></li>
+                        <li><a href="/goku-uma/member/tekichu/index.zpl">的中実績</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10105">東大卒・須田鷹雄の赤門式馬券学</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10149">南沙奈の爆益さなびーむ☆</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10153">高田秋「ほろ酔いG1予想」</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10092">中上博 おとこ気馬券道</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=238">いまにし亭「雑学馬券」</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10066">水島晴之の単複で買え</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10133">水島晴之 次回狙おう</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10125">鬼才堀川一佳の二番勝負</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=225">ニッカン見解＆展望</a></li>
+                        <li><a href="/goku-uma/member/compi/column_technical6.zpl">田中洋平テクニカル６</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10003">ＷＩＮ５</a></li>
+                        <li><a href="/goku-uma/member/compi/column.zpl?topic_id=10053">永井透コンピでＷＩＮ５</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10138">実録マイクのＷＩＮ５</a></li>
+                        <li><a href="/goku-uma/member/chihou/column.zpl?topic_id=10147">あな（穴）たの番です</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10082">奥野庸介海外馬券奥の手</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10083">キナミの帝王</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10084">betkansai</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu"><a href="/goku-uma/member/column/column_list.zpl?mode=top">コラム</a>
+                    <ul>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10139">Happy People Make Happy
+                            Horse</a></li>
+                        <!-- li><a href="/goku-uma/member/column/column.zpl?topic_id=10135">極ウマ日記</a></li -->
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10076">ミルコ魂</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10103">明日への伝言</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=234">データセンター</a></li>
+                        <li><a href="/goku-uma/member/column/column_saiten.zpl?topic_id=10038">重賞調教採点</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10041">ジョッキーズルーム</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10118">角居勝彦元調教師 Thanks Horse</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=223">柴田善臣のヨシ!!トミ</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=227">西山茂行・ちょっといい話</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10069">安藤裕のハッピー（馬）ダイアリー</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10152">水島晴之「G1の鍵 その一瞬」</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10132">水島晴之「勝敗その一瞬」</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10089">女性厩務員のできるまで</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10126">G1のミカタ</a></li>
+                        <li><a href="/goku-uma/member/column/column.zpl?topic_id=10072">奥野庸介の海外競馬を知ろう</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu"><a href="/goku-uma/member/douga/index.zpl">動画</a>
+                    <ul>
+                        <li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10123">佐藤てっちゃんのG1馬体診断</a></li>
+                        <!-- li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10151">佐藤てっちゃんの2021年プレイバック</a></li -->
+                        <!-- li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10150">佐藤てっちゃんの重賞ジャッジ</a></li -->
+                        <li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10002&mode=top">極ウマＮＥＸＴ〜次の狙い馬〜</a></li>
+                        <!-- li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10023&mode=top">記者予想</a></li -->
+                        <!-- li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10122">極ウマ調教ゼミ</a></li -->
+                        <li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10121">激走イチ推し血統</a></li>
+                        <li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10124">有力3歳馬情報</a></li>
+                        <!-- li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10054&mode=top">今週の池江厩舎</a></li -->
+                        <li><a href="/goku-uma/member/douga/douga.zpl?topic_id=10059&mode=top">教えて！池江先生</a></li>
+                        <li><a href="/goku-uma/member/race/result_list.zpl?year=2022&mode=kako">レース動画</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu"><a href="/goku-uma/member/news/news_list.zpl?topic_id=1">ニュース</a>
+                    <ul>
+                        <li><a href="/goku-uma/member/news/news_list.zpl?topic_id=2">有力馬次走</a></li>
+                        <li><a href="/goku-uma/member/pog/archive.zpl?topic_id=4">3歳馬特集</a></li>
+                        <li><a href="/goku-uma/member/leading/leading_list.zpl">リーディング</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- ▲globalMenu -->
+
+        <!-- ▼mainNav -->
+        <style>
+            .mainTheme-nav ul li:nth-child(n+9) {
+                margin-bottom: 0;
+            }
+        </style>
+        <nav id="mainCompiNavi" class="mainTheme-nav clearfix pc">
+            <h3>コンピ指数<span>メニュー</span></h3>
+            <ul class="mainCompi-nav">
+                <li><a href="/goku-uma/member/compi/compi_list.zpl">今週のコンピ指数</a></li>
+                <li><a href="/goku-uma/member/compi/compi_list.zpl?year=2022&mode=kako">過去のコンピ指数</a></li>
+                <li><a href="/goku-uma/member/compi/compi_jusho_list.zpl">過去の重賞コンピ</a></li>
+                <li><a href="/goku-uma/member/compi/compi_db.zpl">コンピデータベース</a></li>
+                <li><a href="/goku-uma/member/compi/compi_win5.zpl?year=2022">過去のWIN5とコンピ</a></li>
+                <li><a href="/goku-uma/member/compi/compi_db_manual.zpl">コンピDBマニュアル</a></li>
+                <li><a href="/goku-uma/member/compi/column_technical6.zpl">田中洋平のテクニカル6</a></li>
+                <li><a href="/goku-uma/member/compi/column.zpl?topic_id=10053">コンピでWIN5</a></li>
+                <li><a href="/goku-uma/member/compi/column.zpl?topic_id=110007">南関コンピ突破塾</a></li>
+            </ul>
+        </nav>
+        <!-- ▲mainNav -->
+
+        <section id="compiArea" class="compi-area">
+
+
+            <h2 id="contentTit">今週のコンピ指数</h2>
+
+            <!-- aaa 852,$mode{},[{course_id=006, race_date=20220326, group_id=852}, {course_id=009, race_date=20220326, group_id=852}, {course_id=007, race_date=20220326, group_id=852}, {course_id=006, race_date=20220327, group_id=852}, {course_id=009, race_date=20220327, group_id=852}, {course_id=007, race_date=20220327, group_id=852}] -->
+            <h4 class="dateTitle">2022年3月26日</h4>
+            <ul class="schedule clearfix">
+                <li><a href=./compi.zpl?course_id=006&date=20220326>中山</a></li>
+                <li><a href=./compi.zpl?course_id=009&date=20220326>阪神</a></li>
+                <li><a href=./compi.zpl?course_id=007&date=20220326>中京</a></li>
+            </ul>
+            <h4 class="dateTitle">2022年3月27日</h4>
+            <ul class="schedule clearfix">
+                <li><a href=./compi.zpl?course_id=006&date=20220327>中山</a></li>
+                <li><a href=./compi.zpl?course_id=009&date=20220327>阪神</a></li>
+                <li><a href=./compi.zpl?course_id=007&date=20220327>中京</a></li>
+            </ul>
+
+            <div class="reloadBox">
+                <p><a class="btn" href="javascript:location.reload();">更新する</a></p>
+                <p class="text">コンピ指数はレース前日の午後７時公開です。公開時刻を過ぎてもコンピ指数のリンクが表示されない場合は、左のボタンをクリックし最新データを読み込んでください。</p>
+            </div>
+
+            <ol class="monthLink">
+                <li><a href="compi_list.zpl?year=2022&mode=kako">2022年</a></li>
+                <li><a href="compi_list.zpl?year=2021&mode=kako">2021年</a></li>
+                <li><a href="compi_list.zpl?year=2020&mode=kako">2020年</a></li>
+                <li><a href="compi_list.zpl?year=2019&mode=kako">2019年</a></li>
+                <li><a href="compi_list.zpl?year=2018&mode=kako">2018年</a></li>
+                <li><a href="compi_list.zpl?year=2017&mode=kako">2017年</a></li>
+                <li><a href="compi_list.zpl?year=2016&mode=kako">2016年</a></li>
+                <li><a href="compi_list.zpl?year=2015&mode=kako">2015年</a></li>
+                <li><a href="compi_list.zpl?year=2014&mode=kako">2014年</a></li>
+                <li><a href="compi_list.zpl?year=2013&mode=kako">2013年</a></li>
+                <li><a href="compi_list.zpl?year=2012&mode=kako">2012年</a></li>
+                <li><a href="compi_list.zpl?year=2011&mode=kako">2011年</a></li>
+                <li><a href="compi_list.zpl?year=2010&mode=kako">2010年</a></li>
+                <li><a href="compi_list.zpl?year=2009&mode=kako">2009年</a></li>
+                <li><a href="compi_list.zpl?year=2008&mode=kako">2008年</a></li>
+                <li><a href="compi_list.zpl?year=2007&mode=kako">2007年</a></li>
+            </ol>
+        </section>
+
+    </div>
+    <!-------- ▲contents -------->
+
+    <!-- ▼sidenav -->
+    <div id="side">
+        <nav id="sideNav">
+            <script type="text/javascript">
+                tp = window.tp || [];
+                jQuery(function (a) {
+                    pianoLoginLogoutButtons = function () {
+                        if (tp.user.isUserValid()) {
+                            //console.log("ログイン済み");
+                        } else {
+                            //console.log("ログインしていません");
+                            if (/PIANOGOKUUMA/.test(document.cookie.split(/\s*;\s*/).map(function (v) {
+                                    return v.split(/=/).map(decodeURIComponent)
+                                }).reduce(function (o, kv) {
+                                    o[kv[0]] = kv[1];
+                                    return o
+                                }, {})._nrole)) {
+                                location.href = '/goku-uma/index.zpl';
+                            }
+                        }
+                    };
+                    tp.push(["init", function () {
+                        pianoLoginLogoutButtons();
+                        a("#piano-logout-button").click(function () {
+                            tp.pianoId.logout(pianoLoginLogoutButtons)
+                        })
+                    }])
+                });
+            </script>
+
+            <div class="sidebnrWrap">
+                <p><a href="https://www.youtube.com/watch?v=d3P2oh5ndGM" target="_blank"><img width="250" height="141"
+                                                                                              alt="高松宮記念予想会"
+                                                                                              src="/goku-uma/photo/news/gokuuma/info/seminar/2022/takamatsumiya/img/mainImg.png"></a>
+                </p>
+            </div>
+
+            <div class="sidebnrWrap hide">
+                <p><a href="/goku-uma/member/info/arima/2021/"><img width="250" height="122" alt="有馬記念2021プレゼント"
+                                                                    src="/goku-uma/photo/news/gokuuma/info/arima/2021/img/bnr.png"></a>
+                </p>
+            </div>
+
+            <div class="sidebnrWrap hide">
+                <p><a href="/goku-uma/member/lp/index.zpl?y=2021&m=autumn" target="_blank"><img width="250" height="122"
+                                                                                                alt="秋の極ウマ・プレミアムは情報量アップ"
+                                                                                                src="/goku-uma/photo/news/gokuuma/guide/lp/2021/autumn/img/mainBnr.png"></a>
+                </p>
+            </div>
+
+            <ul id="sidenavCompi">
+                <li class="bigNavi"><a class="button"
+                                       href="/goku-uma/member/compi/compi_list.zpl"><span>コンピ指数</span></a></li>
+                <li><a class="button"
+                       href="/goku-uma/member/compi/compi_list.zpl?year=2022&mode=kako"><span>過去のコンピ指数</span></a></li>
+                <li><a class="button" href="/goku-uma/member/compi/compi_jusho_list.zpl"><span>過去の重賞コンピ</span></a></li>
+                <li><a class="button" href="/goku-uma/member/compi/compi_db.zpl"><span>コンピデータベース</span></a></li>
+                <li><a class="button"
+                       href="/goku-uma/member/compi/compi_win5.zpl?year=2022"><span>過去のWIN5とコンピ</span></a></li>
+            </ul>
+
+            <ul id="sidenavRace">
+                <li class="bigNavi"><a class="button" href="/goku-uma/member/race/pdf_list_top.zpl?y=2022&wk=13"><span>ＰＤＦ出馬表</span></a>
+                </li>
+                <li><a class="button" href="/goku-uma/member/race/list.zpl?mode=program"><span>出馬表</span></a></li>
+                <li><a class="button"
+                       href="/goku-uma/member/race/pdf_list.zpl?y=2022&wk=13&mode=kako"><span>過去のＰＤＦ出馬表</span></a></li>
+                <li><a class="button" href="/goku-uma/member/race/list.zpl?mode=entry"><span>特別登録馬</span></a></li>
+                <li><a class="button"
+                       href="/goku-uma/member/race/result_list.zpl?year=2022&mode=kako"><span>レース結果・動画</span></a></li>
+            </ul>
+
+            <aside id="sideSocialMedia" class="side-box">
+                <h3>SNSで極ウマ・プレミアム</h3>
+                <ul class="side_social-list">
+                    <li class="icon_twitter"><a href="https://twitter.com/goku_uma" title="別ウィンドウで開きます" target="_blank">twitter</a>
+                    </li>
+                    <li class="icon_facebook"><a href="https://ja-jp.facebook.com/59uma/" title="別ウィンドウで開きます"
+                                                 target="_blank">Facebook</a></li>
+                    <li class="icon_instagram"><a href="https://www.instagram.com/gokuumakun/" title="別ウィンドウで開きます"
+                                                  target="_blank">Instagram</a></li>
+                    <li class="icon_youtube"><a href="https://www.youtube.com/channel/UCy7tvuNvq_Cygzo6H_vBwuQ"
+                                                title="別ウィンドウで開きます" target="_blank">YouTube</a></li>
+                </ul>
+            </aside>
+
+            <div class="sidebnrWrap hide">
+                <p>
+                    <a href="/goku-uma/member/news/article.zpl?topic_id=1&id=202105170000440&year=2021&month=5&day=17"><img
+                            width="250" height="57" alt="おすすめPOGリスト"
+                            src="/goku-uma/img/bLogin/banner/bnr_side_cvsprint_mini.png"></a></p>
+            </div>
+
+            <div class="sidebnrWrap">
+                <p><a href="https://p.nikkansports.com/goku-uma/guide/lp/app/" target="_blank"><img width="250"
+                                                                                                    height="188"
+                                                                                                    alt="ニッカンAI予想アプリ"
+                                                                                                    src="/goku-uma/img/bLogin/banner/bnr_side_nikkan_ai_app_qr.png"></a>
+                </p>
+            </div>
+
+            <div class="sidebnrWrap">
+                <p><a href="/goku-uma/member/world/?mode=dubai&year=2022"><img width="250" height="57" alt="海外競馬"
+                                                                               src="/goku-uma/img/bLogin/banner/bnr_side_world.png"></a>
+                </p>
+            </div>
+
+            <div class="sidebnrWrap hide">
+                <p><a href="https://www.youtube.com/watch?v=G_16mJtz23U" target="_blank"><img width="250" height="122"
+                                                                                              alt="ばんえい競馬YouTube配信"
+                                                                                              src="/goku-uma/img/bLogin/banner/bnr_side_youtube_20210814.png"></a>
+                </p>
+            </div>
+
+            <div class="sidebnrWrap">
+                <p><a href="https://www.ipat.jra.go.jp/" target="_blank"><img
+                        src="/goku-uma/img/banner/bnr_side_ipat.gif" width="250" height="70"
+                        alt="JRA IPAT ご利用はこちらからどうぞ→"/></a></p>
+            </div>
+
+            <div id="sideAttention">
+                <h4><a href="/goku-uma/member/info/security/">重要なお知らせ</a></h4>
+            </div>
+
+            <div id="sideContact">
+                <h4>お問い合わせ</h4>
+                <p class="sideTel">03-5931-4114（平日10〜18時）</p>
+                <p class="sideMail"><a
+                        href="mailto:media_race@nikkansports.co.jp?subject=%e6%a5%b5%e3%82%a6%e3%83%9e%e3%83%97%e3%83%ac%e3%83%9f%e3%82%a2%e3%83%a0%e5%95%8f%e3%81%84%e5%90%88%e3%82%8f%e3%81%9b">media_race@nikkansports.co.jp</a>
+                </p>
+                <p class="sideMailAttention">
+                    ◆ご注意　メールでお問い合わせの方は上記アドレスからのメールを受信できる設定にしてください。回答の返信メールが届かないケースが多く発生しております。ご注意ください。また、ニッカンID以外のログイン及び決済関連については、各関連会社へお問い合わせ下さい。</p>
+                <p class="faqLinkBtn"><a href="/goku-uma/member/faq/">よくあるお問い合わせ</a></p>
+            </div>
+
+            <p class="adobeLink acrobat"><a href="https://get.adobe.com/jp/reader/" target="_blank">PDF出馬表をご覧いただくためには、Adobe
+                Reader（無料）が必要です。</a></p>
+
+            <div class="sidebnrWrap clearfix">
+                <p class="fLeft"><a href="/goku-uma/member/fortune/"><img width="119" height="70"
+                                                                          src="/goku-uma/img/banner/bnr_side_fortune_half.png"
+                                                                          alt="極ウマくんの星占い"></a></p>
+                <p class="fRight"><a href="/goku-uma/member/omikuji/"><img width="119" height="70"
+                                                                           src="/goku-uma/img/banner/bnr_side_bakenomikuji_half.png"
+                                                                           alt="極ウマくんの馬券おみくじ"></a></p>
+            </div>
+
+        </nav>
+    </div>
+    <!-- ▲sidenav -->
+
+    <!-- ▼footer -->
+    <script type="text/javascript">
+        tp = window.tp || [];
+        jQuery(function (a) {
+            pianoLoginLogoutButtons = function () {
+                if (tp.user.isUserValid()) {
+                    //console.log("ログイン済み");
+                } else {
+                    //console.log("ログインしていません");
+                    if (/PIANOGOKUUMA/.test(document.cookie.split(/\s*;\s*/).map(function (v) {
+                            return v.split(/=/).map(decodeURIComponent)
+                        }).reduce(function (o, kv) {
+                            o[kv[0]] = kv[1];
+                            return o
+                        }, {})._nrole)) {
+                        location.href = '/goku-uma/index.zpl';
+                    }
+                }
+            };
+            tp.push(["init", function () {
+                pianoLoginLogoutButtons();
+                a("#piano-logout-button").click(function () {
+                    tp.pianoId.logout(pianoLoginLogoutButtons)
+                })
+            }])
+        });
+    </script>
+
+    <div id="footer">
+        <div id="copyrightwrap">
+            <div id="copyrightwrapBtnWrap">
+
+                <p class="btn_foot"><a href="javascript:void(0);" id="piano-logout-button"><span>ログアウト</span></a></p>
+
+                <p class="btn_foot"><a href="/goku-uma/membership/myaccount/">マイアカウント</a></p>
+
+                <p class="btn_foot"><a href="/goku-uma/guide/kiyaku/index.zpl">会員規約</a></p>
+
+                <p class="btn_foot"><a href="/goku-uma/guide/sctl/index.zpl">特定商取引法に基づく表記</a></p>
+
+                <p class="btn_foot"><a href="/goku-uma/guide/privacy/index.zpl">個人情報の取り扱い</a></p>
+
+            </div>
+
+            <div id="copyrightwrapInner">
+
+                <p id="copyright">※楽天ペイをご利用の方でログインID、パスワードをお忘れになれました場合には、楽天のログイン画面にございます「<a
+                        href="https://member.id.rakuten.co.jp/rms/nid/upkfwd" target="_blank">ユーザID・パスワードを忘れた場合</a>」のリンクからご確認いただけますようお願い致します。また、楽天ペイにてご利用いただいているクレジットカードの情報を変更されたい場合には、楽天ペイのポータルサイトの「<a
+                        href="https://my.checkout.rakuten.co.jp/ust/" target="_blank">利用履歴</a>」から変更頂きますようお願い致します。<br/>
+                    <!-- a href="/goku-uma/membership/myaccount/index.zpl">マイアカウント</a>｜<a href="/goku-uma/guide/kiyaku/index.zpl">会員規約</a>｜<a href="/goku-uma/guide/sctl/index.zpl">特定商取引法に基づく表記</a>｜<a href="/goku-uma/guide/privacy/index.zpl">個人情報の取り扱い</a><br / -->
+                    極ウマプレミアムに掲載の記事・写真・カット等の転載を禁じます。すべての<a title="著作権について"
+                                                          href="https://www.nikkansports.com/policy/copyright.html"
+                                                          target="_blank">著作権</a>は日刊スポーツ新聞社に帰属します。
+                </p>
+
+                <p id="footerlogo"><a title="nikkansports.com" href="https://www.nikkansports.com/"><img
+                        src="/goku-uma/img/logo_nikkan.gif" width="135" height="16" alt="nikkansports.com"/></a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ▲footer -->
+
+</div>
+<!---------------- ▲wrapper -------->
+
+<!---------------- ▼GAUGG -------->
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {'x-gu-member': '2f13519b2a0dsfaedfqxZaezc5c4jklea6eq'}
+    });
+</script>
+<script type="text/javascript" src="/goku-uma/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/goku-uma/js/chat/lib/autosize.min.js"></script>
+<script type="text/javascript" src="/goku-uma/js/chat/lib/jquery.gauss-chat.js"></script>
+<script type="text/javascript" src="/goku-uma/js/chat/chatbot.js"></script>
+<link rel="stylesheet" type="text/css" href="/goku-uma/js/chat/lib/jquery.gauss-chat.css">
+<link rel="stylesheet" type="text/css" href="/goku-uma/js/chat/chatbot.css">
+<link rel="stylesheet" type="text/css" href="/goku-uma/js/chat/chatbot.ext.css">
+
+<!---------------- ▲GAUGG -------->
+</body>
+</html>

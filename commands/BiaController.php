@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: haowang
- * Date: 2016/12/20
- * Time: 下午4:42
- */
 
 namespace app\commands;
 
@@ -14,21 +8,26 @@ use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 
 /**
- * 获取城市数据入库
- * Class SiteController
+ * 获取数据信息
+ * Class BiaController
  * @package app\commands
  */
 class BiaController extends Controller
 {
     const URL = 'https://p.nikkansports.com/';
-    const COOKIE='';
+    const COOKIE = '';
 
     public function actionIndex()
     {
+        echo '----拉取数据开始-----'.PHP_EOL;
+
         $url = static::URL . 'goku-uma/member/compi/compi_list.zpl';
         $client = new Client(['verify' => false]);
         $response = $client->request('get', $url, ['headers' => ['Cookie' => static::COOKIE]]);
         $html = $response->getBody();
+
+        $this->checkIsLogin($html);
+
         /**
          *
          * <ul class="schedule clearfix">
@@ -43,9 +42,9 @@ class BiaController extends Controller
          * <li><a href=./compi.zpl?course_id=007&date=20220327>中京</a></li>
          * </ul>
          */
-        $infoes = html5qp((string)$html,'body > div#wrapper > div#contents > section#compiArea > ul.schedule.clearfix')
+        $infoes = html5qp((string)$html, 'body > div#wrapper > div#contents > section#compiArea > ul.schedule.clearfix')
             ->children();
-        if ($infoes->length==0){
+        if ($infoes->length == 0) {
             die('未获取到城市信息！');
         }
 
@@ -58,9 +57,11 @@ class BiaController extends Controller
                 $tempHref = $region->attr('href');
                 $href = str_replace('./', 'goku-uma/member/compi/', $tempHref);
                 $this->fetchCity($href);
+                //暂停1000毫秒
+                usleep(1000);
             }
         }
-        die('end');
+        die('---获取数据结束----');
     }
 
     public function fetchCity($href)
@@ -110,6 +111,27 @@ class BiaController extends Controller
             }
 
             file_put_contents('first.txt', PHP_EOL, FILE_APPEND);
+        }
+
+    }
+
+
+    /**
+     * 检查当前获取到的页面数据信息是否为登录页
+     * @param $html
+     */
+    public function checkIsLogin($html)
+    {
+        $loginText = html5qp((string)$html, 'body >div#wrapper >header > div#logo > div#headerSignIn >div#piano-login-container>div#piano-login-register-container> ul>li#login >a >span')
+            ->text();
+        if (!empty($loginText)) {
+            die('
+            ----当前获取到的是登录页面-----
+            按照以下步骤重新执行，抓取数据
+            1.手动登录系统，获取到新的cookie
+            2. 将更新至cookie放入数据库
+            3. 手动执行脚本拉取数据【php ./yii bia】
+            ');
         }
 
     }

@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no,address=no,email=no">
+
+<title>日刊スポーツ・メンバーシップのログイン｜極ウマ・プレミアム</title>
+
+<meta name="description" content="日刊スポーツ・メンバーシップのログインです - 日刊スポーツ新聞社のニュースサイト、ニッカンスポーツ・コム（nikkansports.com）。" />
+<meta name="keywords" content="ログイン,メンバーシップ,日刊スポーツ,ニッカン,nikkansports,スポーツ新聞" />
+
+<link rel="shortcut icon" href="/goku-uma/favicon.ico" />
+<!-- style sheet -->
+<link rel="stylesheet" href="/goku-uma/css/bLogin/common.css?update=20191101" media="all" />
+<link rel="stylesheet" href="/goku-uma/css/bLogin/article-style.css" media="all" />
+<link rel="stylesheet" href="/goku-uma/css/bLogin/guide-style.css" media="all" />
+<link rel="stylesheet" href="/goku-uma/membership/css/style.css" media="all" />
+
+<!-- smartphone link -->
+<link rel="alternate" media="only screen and (max-width: 640px)" href="https://p.nikkansports.com/goku-uma/m/membership/login/">
+<!-- OGP -->
+<meta property="og:title" content="日刊スポーツ・メンバーシップのログイン｜極ウマ・プレミアム">
+<meta property="og:description" content="日刊スポーツ・メンバーシップのログインです - 日刊スポーツ新聞社のニュースサイト、ニッカンスポーツ・コム（nikkansports.com）。">
+<meta property="og:site_name" content="p.nikkansports.com">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://p.nikkansports.com/goku-uma/membership/login/index.zpl">
+<meta property="og:image" content="https://p.nikkansports.com/goku-uma/img/common/sns_goku-uma.png">
+<!-- facebook -->
+<meta property="fb:admins" content="414947051933204">
+<meta property="fb:app_id" content="450205331799738">
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@goku_uma">
+
+<!-- script -->
+<script src="/goku-uma/js/common.js"></script>
+<script src="/goku-uma/js/jquery.min.js"></script>
+<script src="/goku-uma/js/main.js"></script>
+<script src="/goku-uma/js/autoChange.js"></script>
+<!-- piano -->
+<script type="text/javascript" src="//csm.cxpublic.com/nikkansports.js"></script>
+<meta name="cXenseParse:pageclass" content=""/>
+<meta property="article:published_time" content=""/>
+<meta property="article:modified_time" content=""/>
+<meta name="cXenseParse:articleid" content=""/>
+<meta name="cXenseParse:nks-pubday" content=""/>
+<meta name="cXenseParse:nks-pubmonth" content=""/>
+<meta name="cXenseParse:nks-pubyear" content=""/>
+<meta name="cXenseParse:nks-keywords" content="" data-separator="," />
+<meta name="cXenseParse:nks-category" content="" data-separator="," />
+
+<script>
+	// 変数設定
+	var pianoPathname = location.pathname;
+	var pianoArticleFlg = false;
+	// パラメータ取得（クエリ文字列）
+	var pianoQueryStr = location.search.substr(1).split('&');
+	var pianoQueryKey = null;
+	var pianoParams = [];
+	for(var i=0; i<pianoQueryStr.length; i++){
+		pianoQueryKey = pianoQueryStr[i].split("=");
+		pianoParams[pianoQueryKey[0]] = pianoQueryKey[1];
+	}
+	// 記事の種類
+	var pageclass = 'frontpage';
+	var pianoArticleFileList = [
+		'/special/index.zpl',
+		'/special/graderace/index.zpl',
+		'/special/graderace/compi.zpl',
+		'/special/graderace/history.zpl',
+		'/yosou/index.zpl',
+		'/syussou/index.zpl',
+		'/douga/index.zpl',
+		'/douga/douga.zpl',
+		'/news/yosou_list.zpl',
+		'/news/yosou.zpl',
+		'/tekichu/',
+		'column.zpl',
+		'column_saiten.zpl',
+		'column_technical6.zpl',
+		'column.zpl',
+		'news.zpl',
+		'article.zpl',
+	];
+	var pianoArticleFileFlg = false;
+	pianoArticleFileList.forEach(function (val, idx){
+		if(pianoPathname.indexOf(val) !== -1){
+			pianoArticleFileFlg = true;
+		}
+	})
+	if(pianoArticleFileFlg){
+		pageclass = 'article';
+		pianoArticleFlg = true;
+	}
+	// 記事公開日
+	var published_time;
+	if(document.getElementsByTagName('head')[0].children.nsTimeStamp){
+		published_time = document.getElementsByTagName('head')[0].children.nsTimeStamp.content;
+	}
+	// 記事更新日
+	var modified_time;
+	if(document.getElementsByTagName('head')[0].children.nsTimeStamp){
+		modified_time = document.getElementsByTagName('head')[0].children.nsTimeStamp.content;
+	}
+	// 記事ID
+	var articleid;
+	if (pianoParams.id != null){
+		articleid = pianoParams.id;
+	}
+	// 発行日、発行月、発行年
+	var nks_pubday,nks_pubmonth,nks_pubday;
+	var pianoTs = Date.parse(published_time);
+	var pianoDt = new Date(pianoTs);
+	var pianoYear = pianoDt.getFullYear();
+	var	pianoMonth = ("0"+(pianoDt.getMonth() + 1)).slice(-2);
+	var	pianoDate = ("0"+pianoDt.getDate()).slice(-2);
+	var pianoYYYY = pianoYear;
+	var pianoYYYYMM = pianoYear + pianoMonth;
+	var pianoYYYYMMDD = pianoYear + pianoMonth + pianoDate;
+	if(isNaN(pianoYYYY)){pianoYYYY = ""}
+	if(isNaN(pianoYYYYMM)){pianoYYYYMM = ""}
+	if(isNaN(pianoYYYYMMDD)){pianoYYYYMMDD = ""}
+	// キーワード
+	var nks_keywords;
+	var nks_keywords_array;
+	if(document.getElementsByTagName('head')[0].children.keywords){
+		nks_keywords_array = document.getElementsByTagName('head')[0].children.keywords.content.split(",");
+		var nks_keywords_array_result = nks_keywords_array.filter(function(value){
+		if(!/日刊スポーツ|ニッカン|nikkansports|日刊|スポーツ新聞|極ウマ・プレミアム|極ウマ|プレミアム競馬|有料|競馬予想/.test(value)){
+			return value
+		}
+	})
+	nks_keywords = nks_keywords_array_result.join(',');
+	}
+	// カテゴリ
+	var nks_category;
+	var pianoCategory = location.pathname.replace(/\/goku-uma/, '').split("/");
+	pianoCategory.shift();
+	pianoCategory.pop();
+	var pianoCategoryCustom = [];
+	var cat = '';
+	for (var i = 0; i < pianoCategory.length; i++){
+		//if(pianoCategory[i] == 'news'){continue;}
+		cat += i==0 ? pianoCategory[i]:'/' + pianoCategory[i];
+		pianoCategoryCustom.push(cat);
+	}
+	nks_category = pianoCategoryCustom.map(function(pcc,idx){
+		return pcc;
+	}).join(',');
+	if(nks_category.length == 0){nks_category = 'index'}
+
+  $(function(){
+		$("meta[name ='cXenseParse:pageclass']").attr('content',pageclass);
+		if (pianoArticleFlg) {
+			$("#articleArea").addClass('cXenseParse');
+			$("meta[property ='article:published_time']").attr('content',published_time);
+			$("meta[property ='article:modified_time']").attr('content',modified_time);
+			$("meta[name ='cXenseParse:articleid']").attr('content',articleid);
+			$("meta[name ='cXenseParse:nks-pubday']").attr('content',pianoYYYYMMDD);
+			$("meta[name ='cXenseParse:nks-pubmonth']").attr('content',pianoYYYYMM);
+			$("meta[name ='cXenseParse:nks-pubyear']").attr('content',pianoYYYY);
+		} else {
+			$("meta[property ='article:published_time']").remove();
+			$("meta[property ='article:modified_time']").remove();
+			$("meta[name ='cXenseParse:articleid']").remove();
+			$("meta[name ='cXenseParse:nks-pubday']").remove();
+			$("meta[name ='cXenseParse:nks-pubmonth']").remove();
+			$("meta[name ='cXenseParse:nks-pubyear']").remove();
+		}
+		$("meta[name ='cXenseParse:nks-keywords']").attr('content',nks_keywords);
+		$("meta[name ='cXenseParse:nks-category']").attr('content',nks_category);
+  });
+</script>
+
+<!-- Composer -->
+<script>
+	(function(src){
+		var a=document.createElement("script");
+		a.type="text/javascript";
+		a.async=true;
+		a.src=src;
+		var b=document.getElementsByTagName("script")[0];
+		b.parentNode.insertBefore(a,b)
+	})("//experience-ap.piano.io/xbuilder/experience/load?aid=QQlagLHspj");
+</script>
+<!-- DFP -->
+<!-- START DFP HEAD JS AREA -->
+<script src="/goku-uma/js/dfp.js"></script>
+<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+
+<script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+</script>
+<script>
+    googletag.cmd.push(function() {
+        pcAdUnit1 ? googletag.defineSlot('/16287682/pc_ns_gate', [1, 1], 'div-gpt-ad-1526544185401-0').addService(googletag.pubads()):'';
+        pcAdUnit2 ? googletag.defineSlot('/16287682/pc_ns_header_728x90', [728, 90], 'div-gpt-ad-1526544185401-1').addService(googletag.pubads()):'';
+        pcAdUnit3 ? googletag.defineSlot('/16287682/pc_ns_billboard_970x250', ['fluid', [970, 250], [1, 1]], 'div-gpt-ad-1526544185401-2').addService(googletag.pubads()).setCollapseEmptyDiv(true,true):'';
+        pcAdUnit4 ? googletag.defineSlot('/16287682/pc_ns_side-1st_300x250_300x600', [[300, 250], [300, 600], [1, 1]], 'div-gpt-ad-1526544185401-3').addService(googletag.pubads()).setCollapseEmptyDiv(true,true):'';
+        pcAdUnit5 ? googletag.defineSlot('/16287682/pc_ns_side-2nd_300x250', [300, 250], 'div-gpt-ad-1526544185401-4').addService(googletag.pubads()):'';
+        pcAdUnit6 ? googletag.defineSlot('/16287682/pc_ns_middle_300x250', [300, 250], 'div-gpt-ad-1526544185401-5').addService(googletag.pubads()):'';
+        pcAdUnit7 ? googletag.defineSlot('/16287682/pc_ns_video_inread', ['fluid', [1, 1]], 'div-gpt-ad-1526544185401-6').addService(googletag.pubads()).setCollapseEmptyDiv(true,true):'';
+        pcAdUnit8 ? googletag.defineSlot('/16287682/pc_ns_side-3rd_300x250', [300, 250], 'div-gpt-ad-1574044697408-0').addService(googletag.pubads()):'';
+        pcAdUnit9 ? googletag.defineSlot('/16287682/pc_ns_double_300x250_left', [300, 250], 'div-gpt-ad-1574044542474-0').addService(googletag.pubads()):'';
+        pcAdUnit10 ? googletag.defineSlot('/16287682/pc_ns_double_300x250_right', [300, 250], 'div-gpt-ad-1574044631038-0').addService(googletag.pubads()):'';
+        pcAdUnit11 ? googletag.defineSlot('/16287682/pc_ns_south_300x250', [300, 250], 'div-gpt-ad-1574044747024-0').addService(googletag.pubads()):'';
+        pcAdUnit12 ? googletag.defineSlot('/16287682/pc_ns_score_468x60', [468, 60], 'div-gpt-ad-1574044796492-0').addService(googletag.pubads()):'';
+        dfpValue.length > 0 ? googletag.pubads().setTargeting('Dir', dfpValue):'';
+        googletag.pubads().setTargeting('adrandom', [String(Math.floor(Math.random() * 10))]);
+        googletag.pubads().disableInitialLoad();
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+    });
+</script>
+<script src="https://micro.rubiconproject.com/prebid/dynamic/15124.js?is_mobile=false" async></script>
+<script>
+    // Timeout
+    var apstagTimeout = 2000;
+    var pbjsTimeout = 1500;
+    var failSafeTimeout = 3000;
+
+    !function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function()
+{q("f",arguments)},setDisplayBids:function(){},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore( A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");
+
+    apstag.init({
+        pubID: '3766',
+        adServer: 'googletag',
+        bidTimeout: apstagTimeout
+    });
+
+    var apstagSlots = [
+        {slotID: 'div-gpt-ad-1526544185401-1', slotName: 'pcAdUnit2', sizes: [[728, 90]]},
+        {slotID: 'div-gpt-ad-1526544185401-3', slotName: 'pcAdUnit4', sizes: [[300, 250]]},
+        {slotID: 'div-gpt-ad-1526544185401-4', slotName: 'pcAdUnit5', sizes: [[300, 250]]},
+        {slotID: 'div-gpt-ad-1526544185401-5', slotName: 'pcAdUnit6', sizes: [[300 ,250]]},
+        {slotID: 'div-gpt-ad-1574044697408-0', slotName: 'pcAdUnit8', sizes: [[300 ,250]]},
+        {slotID: 'div-gpt-ad-1574044542474-0', slotName: 'pcAdUnit9', sizes: [[300 ,250]]},
+        {slotID: 'div-gpt-ad-1574044631038-0', slotName: 'pcAdUnit10', sizes: [[300 ,250]]},
+        {slotID: 'div-gpt-ad-1574044747024-0', slotName: 'pcAdUnit11', sizes: [[300 ,250]]}
+    ]
+
+    var pbjs = pbjs || {};
+    pbjs.que = pbjs.que || [];
+
+    function fetchHeaderBids() {
+        var bidders = ['a9', 'prebid'];
+        var requestManager = {
+            adserverRequestSent: false
+        };
+
+        bidders.forEach(function(bidder) {
+            requestManager[bidder] = false;
+        })
+
+        function allBiddersBack() {
+            var allBiddersBack = bidders
+                .map(function(bidder) {return requestManager[bidder]; })
+                .filter(function(bool) {return bool;})
+               .length === bidders.length;
+            return allBiddersBack;
+        }
+
+        function headerBidderBack(bidder) {
+            if (requestManager.adserverRequestSent === true) {
+                return;
+            }
+            if (bidder === 'a9') {
+                googletag.cmd.push(function() {
+                    apstag.setDisplayBids();
+              });
+            } else if (bidder === 'prebid') {
+            }
+            requestManager[bidder] = true;
+            if (allBiddersBack()) {
+                sendAdserverRequest();
+            }
+        }
+
+        function sendAdserverRequest() {
+            if (requestManager.adserverRequestSent === true) {
+                return;
+            }
+            requestManager.adserverRequestSent = true;
+            googletag.cmd.push(function() {
+                googletag.pubads().refresh();
+            });
+        }
+
+        function requestBids() {
+            apstag.fetchBids({
+                slots: apstagSlots
+            }, function(bids) {
+                headerBidderBack('a9');
+            });
+            googletag.cmd.push(function() {
+                pbjs.que.push(function() {
+                    pbjs.rp.requestBids({
+                        callback: function (bidResponses) {
+                             headerBidderBack('prebid');
+                        }
+                    });
+                });
+            });
+        }
+
+        requestBids();
+        window.setTimeout(function() {
+            sendAdserverRequest();
+        }, failSafeTimeout);
+    }
+
+    fetchHeaderBids();
+</script>
+<!-- END DFP HEAD JS AREA -->
+
+<!-- START FOneH -->
+<script type="text/javascript">
+(function(b){function f(){var d=this;d.stack={};d.displayAd=function(){};d.requestAds=function(a){var c=b[b.a];if(0===(a||{}).sectionId||(a||{}).sectionId)try{c.requestAds.call(c,a)}catch(e){d.stack[a.sectionId+(a.instance?"_"+a.instance:"")]=a}};d.setGlobalCustomParams=function(a){var c=b[b.a];try{c.setGlobalCustomParams.call(c,a)}catch(e){d.globalCustomParams=a||{}}}}function g(b){var a=e.createElement("script"),c=e.getElementsByTagName("script")[0];a.type="text/javascript";a.src=b;a.async=!0;-1!==
+navigator.userAgent.indexOf("Opera")?setTimeout(function(){c.parentNode.insertBefore(a,c)},0):c.parentNode.insertBefore(a,c)}var e=b.document;try{b.__putPixel(200100)}catch(k){}b.a="__ASL__";var h=("https:"===e.location.protocol?"https:":"http:")+"//img.ak.impact-ad.jp/fh/showad_8c75b8bc.js";if("undefined"===typeof b.__ASL_LIB_LOADED){g(h);try{b.__putPixel(200200)}catch(l){}}b.__ASL_LIB_LOADED=1;b["TagProvider"]=b["TagProvider"]||new f})(window);
+</script>
+<!-- END FOneH -->
+<!-- Google Ads -->
+<!-- Global site tag (gtag.js) - Google Ads: 830623357 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-830623357"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-830623357');
+</script>
+<!-- ランキングIE表示用 -->
+<script>
+window.Promise||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"><'+'/script>');//Promiseも必要
+window.fetch||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"><'+'/script>');//3.0.0に上げるとIE10/11で動かない
+</script>
+<!-- /ランキングIE表示用 -->
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '309675060510494');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=309675060510494&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+
+<!-- サイトジェネラルタグ -->
+<script async src="https://s.yimg.jp/images/listing/tool/cv/ytag.js"></script>
+<script>
+window.yjDataLayer = window.yjDataLayer || [];
+function ytag() { yjDataLayer.push(arguments); }
+ytag({"type":"ycl_cookie"});
+</script>
+<!-- End サイトジェネラルタグ -->
+<!--[if lt IE 9]>
+<script src="/goku-uma/js/html5shiv.js"></script>
+<script src="/goku-uma/js/selectivizr-min.js"></script>
+<![endif]-->
+
+</head>
+
+<body id="race" class="premium membership pc free piano-not-loggedin">
+
+<!-------- ▼FOneH-------->
+<!-- FOneH SECTION -->
+<script type='text/javascript'>
+try{
+TagProvider.requestAds({sectionId: 9139, dmp: false, sync: false});
+}catch(err){}
+</script>
+<!-- FOneH SECTION -->
+<!-------- ▲FOneH -------->
+
+<!-------- ▼GoogleAnalytics-------->
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PP8FXC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PP8FXC');</script>
+<!-- End Google Tag Manager -->
+<!-------- ▲GoogleAnalytics -------->
+
+<!---------------- ▼wrapper ---------------->
+<div id="wrapper">
+<!-- SmartPhoneViewButton -->
+<div id="smpViewBtn"></div>
+
+<!-------- ▼header -------->
+<style>
+#headerSignIn ul li#member a,
+#headerSignIn ul li#myaccount a,
+#headerSignIn ul li#logout a{
+	background: #fff;
+	width:120px;
+	height:50px;
+	display:block;
+	text-align: center;
+	line-height: 46px;
+	color: #007c00;
+	font-size:15px;
+	margin-right:10px;
+	border: 2px solid #007c00;
+}
+#headerSignIn ul li:first-child a{
+	margin-right:0 !important;
+}
+</style>
+<header>
+<!-------- ▼DFP HEADER -------->
+<aside id="headerAdBnr">
+<!-- /16287682/pc_ns_header_728x90 -->
+<style>
+#div-gpt-ad-1526544185401-1{
+margin: auto; 
+}
+</style>
+<div id='div-gpt-ad-1526544185401-1' style='height:90px; width:728px;'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1526544185401-1'); });
+</script>
+</div>
+</aside>
+<!-------- ▲DFP HEADER -------->
+
+<nav id="globalNav">
+<h2 class="skip">グローバルナビ</h2>
+<p class="go-home_btm"><a href="https://www.nikkansports.com/">日刊スポーツ</a></p>
+<ul class="global-nav">
+<li class="global-nav_bb"><a href="https://www.nikkansports.com/baseball/">野球</a></li>
+<li class="global-nav_mb"><a href="https://www.nikkansports.com/baseball/mlb/">MLB</a></li>
+<li class="global-nav_sc"><a href="https://www.nikkansports.com/soccer/">サッカー</a></li>
+<li class="global-nav_sp"><a href="https://www.nikkansports.com/sports/">スポーツ</a></li>
+<li class="global-nav_gf"><a href="https://www.nikkansports.com/sports/golf/">ゴルフ</a></li>
+<li class="global-nav_bt"><a href="https://www.nikkansports.com/battle/">相撲バトル</a></li>
+<li class="global-nav_rc"><a href="https://p.nikkansports.com/goku-uma/">競馬</a></li>
+<li class="global-nav_pu"><a href="https://www.nikkansports.com/public_race/">公営競技</a></li>
+<li class="global-nav_et"><a href="https://www.nikkansports.com/entertainment/">芸能</a></li>
+<li class="global-nav_gn"><a href="https://www.nikkansports.com/general/">社会</a></li>
+<li class="global-nav_al"><a href="https://athleterecipe.com/">アスレシピ</a></li>
+</ul>
+</nav><!-- globalNav -->
+
+
+<div id="logo">
+<h1><a href="/goku-uma/index.zpl"><img src="/goku-uma/img/logo_gokuuma_free.png" width="120" height="50" alt="極ウマ・プレミアム" /></a></h1>
+
+<script type="text/javascript">
+tp=window.tp||[];jQuery(function(a){pianoLoginLogoutButtons=function(){if(tp.user.isUserValid()){a("#piano-logout-container").show();a("#piano-login-register-container").hide()}else{a("#piano-logout-container").hide();a("#piano-login-register-container").show()}};tp.push(["init",function(){pianoLoginLogoutButtons();a(".piano-login-button").click(function(){tp.pianoId.show({screen:"login",loggedIn:pianoLoginLogoutButtons})});a(".piano-register-button").click(function(){tp.pianoId.show({screen:"register",loggedIn:pianoLoginLogoutButtons})});a("#piano-logout-button").click(function(){tp.pianoId.logout(pianoLoginLogoutButtons)})}])});
+</script>
+
+<div id="headerSignIn">
+
+<div id="piano-login-container" class="membershipWrap">
+<div id="piano-login-register-container" style="display: none;">
+<ul>
+<li id="touroku"><a href="/goku-uma/membership/register/index.zpl"><span>新規登録</span></a></li>
+
+<li id="login"><a href="/goku-uma/membership/login/index.zpl"><span>ログイン</span></a></li>
+
+<!--
+<li id="login"><a href="/goku-uma/member/"><span>ログイン</span></a></li>
+-->
+
+<!-- li id="login"><a href="javascript:void(0);" class="piano-login-button"><span>ログイン</span></a></li -->
+<li id="nikkanAiApp" style="margin-right:10px;"><a href="https://p.nikkansports.com/goku-uma/guide/lp/app/" target="_blank" onclick="dataLayer.push({'event': 'free_top_AIbutton', 'eventLabel':'ニッカンAI予想アプリ誘導ボタンPC'});"><img src="/goku-uma/img/bLogin/banner/bnr_side_nikkan_ai_app_mini.png" alt="ニッカンAI予想アプリ" width="120" height="50"></a></li>
+</ul>
+</div>
+<div id="piano-logout-container" style="display: none;">
+<ul>
+<li id="member"><a href="/goku-uma/member/index.zpl"><span>［有料］極ウマ</span></a></li>
+<li id="logout"><a href="javascript:void(0);" id="piano-logout-button"><span>ログアウト</span></a></li>
+<li id="myaccount"><a href="/goku-uma/membership/myaccount/"><span>マイアカウント</span></a></li>
+<li id="nikkanAiApp" style="margin-right:10px;"><a href="https://p.nikkansports.com/goku-uma/guide/lp/app/" target="_blank" onclick="dataLayer.push({'event': 'free_top_AIbutton', 'eventLabel':'ニッカンAI予想アプリ誘導ボタンPC'});"><img src="/goku-uma/img/bLogin/banner/bnr_side_nikkan_ai_app_mini.png" alt="ニッカンAI予想アプリ" width="120" height="50"></a></li>
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</header>
+<!-------- ▲header -------->
+
+
+<!-------- ▼contents -------->
+<div id="contents">
+
+
+<!-------- ▼main -------->
+<div id="main">
+
+<!-------- ▼mainSubNavi -------->
+<nav id="mainSubNavi" class="clearfix">
+<ul class="mainSub-nav">
+<li class="ai"><a href="/goku-uma/guide/ai/">ＡＩ予想</a></li>
+<li class="compi"><a href="/goku-uma/guide/compi/index.zpl">コンピ予想</a></li>
+<li class="race "><a href="/goku-uma/guide/special/graderace/index.zpl?g=g1&m=osakahai&y=2022">注目レース</a></li>
+<li class="pdf"><a href="/goku-uma/guide/trial/">ＰＤＦ出走表・レース予想</a></li>
+<li class="column"><a href="/goku-uma/guide/column/">コラム</a></li>
+<li class="chihou"><a href="/goku-uma/guide/chihou/">地方競馬</a></li>
+</ul>
+</nav><!-- /socialMedia -->
+
+<!-------- ▲mainSubNavi -------->
+
+<section id="articleArea">
+
+<nav id="routeNav">
+<ol class="route-nav">
+<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+<a itemprop="url" href="https://p.nikkansports.com/goku-uma/"><span itemprop="title">極ウマTOP</span></a>
+</li>
+<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+<span itemprop="title">メンバーシップ</span>
+</li>
+<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+<span itemprop="title">ログイン</span>
+</li>
+</ol>
+</nav>
+
+<!-- ▼membershipArea -->
+<section id="membershipArea" class="membership-area">
+
+<header class="membership-title">
+<h1>ログイン</h1>
+</header>
+
+<section class="membership-area-top">
+
+<style>
+#login-form {
+  margin: auto;
+  max-width: 400px;
+}
+.only-not-loggedin {display: none;}
+.only-loggedin {display: none;}
+.piano-loggedin .only-loggedin {display: inherit;}
+.piano-loggedin .only-not-loggedin, .only-not-loggedin {display: none;}
+.piano-not-loggedin .only-loggedin, .only-loggedin {display: none;}
+.piano-not-loggedin .only-not-loggedin {display: inherit; margin: 10px 0;}
+</style>
+
+<!-- PIANOログインフォーム -->
+<div id="login-form"></div>
+
+<!-- login -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.reduce%2CObject.assign%2Cfetch%2CPromise"></script>
+<script>
+var getBodyClass = $('body').attr('class').split(' ');
+var sp_flg = getBodyClass.some(function(val,idx,array){
+	// 指定記事判定
+	if(val && val === 'sp'){ return val }
+});
+var loginUrl = '/goku-uma/member/index.zpl';
+if(sp_flg){
+	loginUrl = '/goku-uma/member/m/index_sp.zpl';
+}
+tp = window.tp || [];
+tp.push(["init", function() {
+	var q = location.search.replace(/^\?/,'').split(/&/).map(function(kv){return kv.split(/=/,2).map(decodeURIComponent)}).reduce(function(o,kv){o[kv[0]]=kv[1];return o},{});
+	var c = document.cookie.split(/\s*;\s*/).map(function(v){return v.split(/=/).map(decodeURIComponent)}).reduce(function(o,kv){o[kv[0]]=kv[1];return o},{});
+	var next = (q.backurl || loginUrl).replace(/\?$/,'').replace(/^https?:\/\/[^\/]+/,'');
+	document.querySelector("#login-form").innerHTML="ログインチェック…";
+	tp.pianoId.show({
+		disableSignUp: false,
+		displayMode: 'inline',
+		screen: 'login',
+		containerSelector: '#login-form',
+		loggedIn: function() {
+			fetch("/auth_piano/?stage=production&_="+Date.now()).then(function(r){return r.json()}).then(function(r){
+				console.log({auth_piano_res:r});
+				if((r.check||{}).access) {
+//				if(r.check.access) {
+					if(r.check.access.granted) {
+						console.log("granted, move to "+next);
+						location.href=next;
+						return;
+					}
+				}
+//				console.log("not granted, show offer");
+//				tp.offer.show({ offerId: "OFZCYGGOCDLA", templateId: "OTNJ60HHY6C8" });	
+			}).catch(function(err){console.error(err)})
+		}
+	});
+}]);
+</script>
+
+<!-- その他ログイン-->
+<div class="only-not-loggedin">
+  <div style="display:flex;justify-content:center;">
+    <!-- 楽天ログインボタン -->
+    <div>
+      <form action="https://api.id.rakuten.co.jp/openid/auth" method="post">
+        <input type="hidden" name="openid.ns" value="http://specs.openid.net/auth/2.0">
+        <input type="hidden" name="openid.return_to" value="http://p.nikkansports.com/rakuten-auth/auth-premium-keiba.pl">
+        <input type="hidden" name="openid.claimed_id" value="http://specs.openid.net/auth/2.0/identifier_select">
+        <input type="hidden" name="openid.identity" value="http://specs.openid.net/auth/2.0/identifier_select">
+        <input type="hidden" name="openid.mode" value="checkid_setup">
+        <input type="image" src="https://webservice.rakuten.co.jp/img/openid/openid_login_M.gif">
+      </form>
+    </div>
+    <!-- BIGLOBEログインボタン -->
+    <div>
+      <a href="https://p.nikkansports.com/goku-uma/biglobe3/"><img src="https://p.nikkansports.com/goku-uma/biglobe3/img/bLogin/biglobe_logo_color150cw.gif" alt="Biglobeログイン"></a>
+    </div>
+  </div>
+</div>
+<!-- /login -->
+
+</section><!-- /membership-area-top -->
+
+</section>
+<!-- ▲membershipArea -->
+
+</section><!-- /articleArea -->
+
+<!-------- ▼FOneH-------->
+<aside class="ad-area">
+<!-- +++++ AD TEXT +++++ -->
+<div id="adText" class="ad_text">
+<!-- FOneH AD TEXT 1 -->
+<div id="7614_9139">
+<script type="text/javascript">
+try{ TagProvider.displayAd('7614_9139'); }catch(err){}
+</script>
+</div>
+<!-- FOneH AD TEXT 1 -->
+<!-- FOneH AD TEXT 2 -->
+<div id="7615_9139">
+<script type="text/javascript">
+try{ TagProvider.displayAd('7615_9139'); }catch(err){}
+</script>
+</div>
+<!-- FOneH AD TEXT 2 -->
+<!-- FOneH AD TEXT 3 -->
+<div id="7616_9139">
+<script type="text/javascript">
+try{ TagProvider.displayAd('7616_9139'); }catch(err){}
+</script>
+</div>
+<!-- FOneH AD TEXT 3 -->
+<!-- FOneH AD TEXT 4 -->
+<div id="7617_9139">
+<script type="text/javascript">
+try{ TagProvider.displayAd('7617_9139'); }catch(err){}
+</script>
+</div>
+<!-- FOneH AD TEXT 4 -->
+<p>Sponsored</p>
+</div>
+<!-- /+++++ AD TEXT +++++ -->
+<!-- +++++ PUB +++++ -->
+<div id="adPub" class="ad_pub">
+<!-- FOneH AD GF -->
+<div id="7618_9139">
+<script type="text/javascript">
+try{ TagProvider.displayAd('7618_9139'); }catch(err){}
+</script>
+</div>
+<!-- FOneH AD GF -->
+</div>
+<!-- /+++++ PUB +++++ -->
+</aside>
+<!-------- ▲FOneH -------->
+
+<!-------- ▼adGoogle -------->
+<style>
+#adGoogle .listHead{display: none}
+</style>
+<aside id="adGoogle" class="ad-area">
+<div class="listHead">
+<h3>Ads by Google</h3>
+<p>PR</p>
+</div>
+<div class="ad_google-adsense_L fl-l">
+<!-- /16287682/pc_ns_double_300x250_left -->
+<div id='div-gpt-ad-1574044542474-0' style='width: 300px; height: 250px;'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1574044542474-0'); });
+</script>
+</div>
+</div>
+<div class="ad_google-adsense_R fl-r">
+<!-- /16287682/pc_ns_double_300x250_right -->
+<div id='div-gpt-ad-1574044631038-0' style='width: 300px; height: 250px;'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1574044631038-0'); });
+</script>
+</div>
+</div>
+</aside>
+<!-------- ▲adGoogle -------->
+
+</div>
+<!-------- ▲main -------->
+
+
+<!-------- ▼side -------->
+<div id="side">
+<aside id="sideSubscription">
+<ul>
+<li class="text-heading"><a href="https://koudoku.nikkansports.com/?utm_source=banner002&utm_medium=banner&utm_campaign=banner" onclick="dataLayer.push({'event': 'koudoku_paysite_event' , 'eventLabel' : '購読申込'})">新聞購読のご案内</a></li>
+<li class="text-heading"><a href="https://www.nikkansports.com/tool/pay/top-pay.html">有料サイト一覧</a></li>
+</ul>
+</aside>
+
+<!-------- ▼DFP SIDE 1ST -------->
+<aside id="sideAd1" class="rectangle">
+<!-- /16287682/pc_ns_side-1st_300x250_300x600 -->
+<div id='div-gpt-ad-1526544185401-3'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1526544185401-3'); });
+</script>
+</div>
+</aside>
+<!-------- ▲DFP SIDE 1ST -------->
+
+<nav id="sideSubNavi" class="side-box clearfix">
+<ul class="sideSub-nav">
+<li><a href="/goku-uma/guide/payment/">会員登録の方法</a></li>
+<li><a href="/goku-uma/guide/sample/">有料版<br>極ウマ<br>とは？</a></li>
+<li><a href="/goku-uma/guide/lp/tetsuzo/">佐藤哲三の哲三塾</a></li>
+<li><a href="/goku-uma/guide/tekichu/">的中情報</a></li>
+<li><a href="/goku-uma/guide/schedule/">重賞日程</a></li>
+<li><a href="/goku-uma/guide/faq/">Ｑ＆Ａ</a></li>
+</ul>
+</nav><!-- /socialMedia -->
+
+
+<section id="sideRanking" class="side-box side_ranking race">
+<h2 class="icon-heading">ニュースランキング</h2>
+<script type="text/javascript" src="https://cache2.nipc.jp/mod2015/js/api-ranking.js"></script>
+<script type="text/javascript" src="https://cache2.nipc.jp/mod2015/js/api-ns_ranking.js"></script>
+
+<section id="rankingArea" class="tab-contents js_tab">
+
+<ul class="tab-nav clm-1 clearfix hide">
+<li class="is_active"><a href="javascript:void(0)">記事</a></li>
+</ul>
+
+<section id="newsRanking" class="tab-box">
+<h3 class="skip">記事ランキング</h3>
+<ul class="news-ranking_list"></ul>
+</section>
+
+</section><!-- /rankingArea -->
+
+</section>
+
+<aside id="sideSocialMedia" class="side-box">
+<h3>SNSで極ウマ・プレミアムをチェック</h3>
+<ul class="side_social-list">
+<li class="icon_twitter"><a href="https://twitter.com/goku_uma" title="別ウィンドウで開きます" target="_blank">twitter</a></li>
+<li class="icon_facebook"><a href="https://ja-jp.facebook.com/59uma/" title="別ウィンドウで開きます" target="_blank">Facebook</a></li>
+<li class="icon_instagram"><a href="https://www.instagram.com/gokuumakun/" title="別ウィンドウで開きます" target="_blank">Instagram</a></li>
+<li class="icon_youtube"><a href="https://www.youtube.com/channel/UCy7tvuNvq_Cygzo6H_vBwuQ" title="別ウィンドウで開きます" target="_blank">YouTube</a></li>
+</ul>
+</aside>
+
+<aside class="banner hide">
+<a href="https://www.youtube.com/watch?v=d3P2oh5ndGM" title="高松宮記念予想会" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbanner高松宮記念予想会'});" target="_blank"><img src="/goku-uma/photo/news/gokuuma/info/seminar/2022/takamatsumiya/img/mainImg.png" alt="高松宮記念予想会" width="300" height="169"></a>
+</aside>
+
+<aside class="banner hide">
+<a href="/goku-uma/info/arima/2021/" title="有馬記念2021プレゼント" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbanner有馬記念2021プレゼント'});"><img src="/goku-uma/photo/news/gokuuma/info/arima/2021/img/bnr.png" alt="有馬記念2021プレゼント" width="300" height="147"></a>
+</aside>
+
+<aside class="banner hide">
+<a href="/goku-uma/guide/lp/index.zpl?y=2021&m=autumn" title="秋の極ウマ・プレミアムは情報量アップ" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbanner秋の極ウマ・プレミアムは情報量アップ'});" target="_blank"><img src="/goku-uma/photo/news/gokuuma/guide/lp/2021/autumn/img/mainBnr.png" alt="秋の極ウマ・プレミアムは情報量アップ" width="300" height="147"></a>
+</aside>
+
+<aside class="banner hide">
+<a href="/goku-uma/news/article.zpl?topic_id=1&id=202105170000440&year=2021&month=5&day=17" title="おすすめPOGリスト" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbannerおすすめPOGリスト'});"><img src="/goku-uma/img/bLogin/banner/bnr_side_cvsprint_mini.png" alt="おすすめPOGリスト" width="300" height="68"></a>
+</aside>
+
+<aside class="banner">
+<a href="/goku-uma/guide/lp/app/" title="ニッカンAI予想アプリ" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbannerニッカンAI予想アプリ'});" target="_blank"><img src="/goku-uma/img/bLogin/banner/bnr_side_nikkan_ai_app_qr.png" alt="ニッカンAI予想アプリ" width="300" height="225"></a>
+</aside>
+
+<!-- ▼bnr-area -->
+<aside class="banner">
+<a href="/goku-uma/guide/world/?mode=dubai&year=2022" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbanner海外競馬'});"><img src="/goku-uma/img/bLogin/banner/bnr_side_world.png" alt="海外競馬" width="300" height="68"></a>
+</aside>
+<!-- ▲bnr-area -->
+
+<aside class="banner hide">
+<a href="https://www.youtube.com/watch?v=G_16mJtz23U" title="ばんえい競馬YouTube配信" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbannerばんえい競馬YouTube配信'});" target="_blank"><img src="/goku-uma/img/bLogin/banner/bnr_side_youtube_20210814.png" alt="ばんえい競馬YouTube配信" width="300" height="147"></a>
+</aside>
+
+<aside class="banner">
+<a href="/goku-uma/guide/fortune/" title="極ウマくんの星占い" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbanner極ウマくんの星占い'});"><img src="/goku-uma/img/bLogin/banner/bnr_side_fortune.png" alt="極ウマくんの星占い" width="300" height="68"></a>
+</aside>
+
+<aside class="banner">
+<a href="/goku-uma/guide/copy/" title="コンピコンビニ販売" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbannerコンピコンビニ販売'});"><img src="/goku-uma/img/bLogin/banner/bnr_side_compiCvs.png" alt="コンピコンビニ販売" width="300" height="68"></a>
+</aside>
+
+<aside class="banner">
+<a href="https://www.nikkansports.com/public_race/keirin/mid_cal/" title="ミッドナイト競輪 PDF新聞無料配信" onclick="dataLayer.push({'event': 'free_top_List', 'eventLabel':'ＰＣbannerミッドナイト競輪PDF新聞無料配信'});" target="_blank"><img src="/goku-uma/img/bLogin/banner/bnr_side_gokeirin.jpg" alt="ミッドナイト競輪 PDF新聞無料配信" width="300" height="68"></a>
+</aside>
+
+<!-------- ▼DFP SIDE 2ND -------->
+<aside class="rectangle">
+<!-- /16287682/pc_ns_side-2nd_300x250 -->
+<div id='div-gpt-ad-1526544185401-4' style='height:250px; width:300px;'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1526544185401-4'); });
+</script>
+</div>
+</aside>
+<!-------- ▲DFP SIDE 2ND -------->
+
+<aside class="banner clm-2 hide">
+<a href="http://compi-db.nikkansports.com/" title="コンピ探知機" target="_blank"><img src="/goku-uma/img/bLogin/banner/bnr_side_compiTanchiki.png" alt="コンピ探知機" width="145" height="100"></a>
+<a href="/goku-uma/guide/copy/" title="コンピコンビニ販売" target="_blank"><img src="/goku-uma/img/bLogin/banner/bnr_side_compiCvs.png" alt="コンピコンビニ販売" width="145" height="100"></a>
+</aside>
+
+<script type="text/javascript">
+	$(function(){
+		$("#sideRecArea").load("https://www.nikkansports.com/advertising/side/recommend-list_goku-uma.html .side_reco-box");
+	})
+</script>
+<aside id="sideRecommend" class="side-box">
+<h3><span>クローズアップ情報</span></h3>
+<div id="sideRecArea">
+</div>
+</aside><!-- /sideRecommend -->
+
+<aside id="sideContact" class="side-box">
+<h4>お問い合わせ</h4>
+<ul class="contactlist">
+<li class="telIcon">03-5931-4114（平日10〜18時）</li>
+<li class="mailIcon"><a href="mailto:media_race@nikkansports.co.jp?subject=%e3%80%90%e3%83%8b%e3%83%83%e3%82%ab%e3%83%b3ID%e3%80%91%e6%a5%b5%e3%82%a6%e3%83%9e%e3%83%97%e3%83%ac%e3%83%9f%e3%82%a2%e3%83%a0%e5%95%8f%e3%81%84%e5%90%88%e3%82%8f%e3%81%9b">media_race@nikkansports.co.jp</a></li>
+</ul>
+<p class="sideMailAttention">◆ご注意&#12288;メールでお問い合わせの方は上記アドレスからのメールを受信できる設定にしてください。回答の返信メールが届かないケースが多く発生しております。ご注意ください。また、ニッカンID以外のログイン及び決済関連については、各関連会社へお問い合わせ下さい。</p>
+<p class="faqLinkBtn"><a href="/goku-uma/guide/faq/">よくあるお問い合わせ</a></p>
+</aside>
+
+</div>
+
+<!-------- ▲side -------->
+
+
+</div>
+<!-------- ▲contents -------->
+
+
+<!-------- ▼entryFooter -------->
+<div id="entryFooter">
+<section id="entryMain" class="entry-main">
+<h3 class="pay">1つのIDで <span>パソコン</span> と <span>スマホ</span> の両方使えて、会費は月額 <span>880</span>円（税込）〜</h3>
+<p class="nowEntryArrow">今すぐ登録</p>
+
+<div class="entry-pay-area">
+<dl>
+<dt><a href="/goku-uma/guide/payment/index.zpl">クレジットカードでのお支払い方法</a></dt>
+<dd>下記の各カードでご利用いただけます｡<br>
+<img width="85" height="55" alt="VISA" src="/goku-uma/img/bLogin/logo_visa.gif" class="creditCard">
+<img width="85" height="55" alt="MasterCard" src="/goku-uma/img/bLogin/logo_mastercard.gif" class="creditCard">
+<img width="72" height="55" alt="JCB" src="/goku-uma/img/bLogin/logo_jcb.gif" class="creditCard">
+<img width="55" height="55" alt="American Express" src="/goku-uma/img/bLogin/logo_americanexpress.gif" class="creditCard">
+<img width="75" height="55" alt="Diners Club" src="/goku-uma/img/bLogin/logo_diners.gif" class="creditCard">
+</dd>
+</dl>
+<!--
+<dl>
+<dt><a href="/goku-uma/guide/payment/webmoney.zpl">ウェブマネーでのお支払い方法</a></dt>
+<dd>ウェブマネーはお近くのコンビニエンスストア（ローソン、エーエム・ピーエム、サンクスなど）でお求めいただけます。詳しいウェブマネーの使い方、入手方法は、<a target="_blank" href="https://www.webmoney.jp/">ウェブマネーのサイト</a>へ。</dd>
+</dl>
+-->
+<p class="btn-entry-now"><a href="/goku-uma/member/index.zpl" onClick="javascript:_gaq.push(['_trackEvent', 'goku_uma-top_pc', 'entry', 'click', 1 , true]);">今すぐ申し込む</a></p>
+</div>
+
+<div class="entry-pay-area">
+<dl>
+<dt>●&nbsp;楽天ペイ</dt>
+<dd>1）下の「楽天IDでログイン」ボタンをクリックしてください。楽天ログインページが表示されます。</dd>
+<dd>2）すでに楽天IDを取得済みの方はIDとパスワードを入力してログインしてください。楽天IDに未登録の方は「楽天IDに新規登録して（無料）サービスを利用する」ボタンをクリックすると入会フォームを表示します。</dd>
+<dd>3）購入ページで「購入する」ボタンをクリックすると購入手続きに入ります。</dd>
+<dd class="rakutenOpenID rakuten">
+<!-- Rakuten OpenID Login Button FROM HERE -->
+<form action="https://api.id.rakuten.co.jp/openid/auth" method="post"> 
+<input type="hidden" name="openid.ns" value="http://specs.openid.net/auth/2.0" > 
+<input type="hidden" name="openid.return_to" value="http://p.nikkansports.com/rakuten-auth/auth-premium-keiba.pl" > 
+<input type="hidden" name="openid.claimed_id" value="http://specs.openid.net/auth/2.0/identifier_select" > 
+<input type="hidden" name="openid.identity" value="http://specs.openid.net/auth/2.0/identifier_select" > 
+<input type="hidden" name="openid.mode" value="checkid_setup" > 
+<input type="image" src="https://webservice.rakuten.co.jp/img/openid/openid_login_S.gif"> 
+</form> 
+<!-- Rakuten OpenID Login Button TO HERE -->
+</dd>
+<dd class="rakuten"><a href='https://checkout.rakuten.co.jp/' target='_blank'><img src='https://checkout.rakuten.co.jp/p/common/img/img_cardface_h4.gif?8a185da4d4c4794e7872aa7b1102d5e3' border='0' width="220"/></a></dd>
+</dl>
+<dl>
+<dt>●&nbsp;プロバイダ料金と一緒にお支払い</dt>
+<dd>1）ご利用のプロバイダを以下より選択してください。各プロバイダ用のTOPページが表示されます。</dd>
+<dd>2）TOPページにある入会／登録／購読申し込み（プロバイダによって表記は異なります）よりコンテンツ購入の手続きに入ります。</dd>
+<dd><ul>
+<li><a href="https://p.nikkansports.com/goku-uma/biglobe3/"><img width="66" height="26" alt="BIGLOBE" src="/goku-uma/img/bLogin/btn-biglobe-66.gif"></a></li>
+</ul></dd>
+</dl>
+</div>
+
+<p class="btn-entry-topPage"><a href="/goku-uma/index.zpl"><img src="/goku-uma/img/promotePage_TopBTN-L.gif" width="535" height="90" alt="極ウマ・プレミアム紹介TOPページを見る" /></a></p>
+
+</section>
+</div>
+<!-------- ▲entryFooter -------->
+
+
+<!-------- ▼footer -------->
+<footer id="siteFooter">
+
+<style>
+/* OVERWRITE */
+#memberRelatedBtnArea ul li {width: 24%;}
+#memberRelatedBtnArea ul li:nth-child(4n) {margin-right: 0;}
+</style>
+<div id="memberRelatedBtnArea">
+<ul>
+<li><a href="/goku-uma/membership/myaccount/index.zpl">マイアカウント</a></li>
+<li><a href="/goku-uma/guide/kiyaku/index.zpl">会員規約</a></li>
+<li><a href="/goku-uma/guide/sctl/index.zpl">特定商取引法に基づく表記</a></li>
+<li><a href="/goku-uma/guide/privacy/index.zpl">個人情報の取り扱い</a></li>
+</ul>
+<p>※上記ボタンからのリンク先ページはニッカンＩＤ会員の方のみご利用できます。</p>
+</div>
+
+<section id="footerSiteNav">
+
+<nav class="site_genre-nav clm-2">
+<h3 class="skip">フッターのサイトナビ</h3>
+
+<div class="fl-l">
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/baseball/">野球</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/baseball/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/baseball/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/">プロ野球</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/score/">スコア速報</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/data/standings/">順位表</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/schedule/">日程・結果</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/data/pfdata/person/cl-pitcher.html">個人成績</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/player/">選手名鑑</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/team/">球団別</a></li>
+<li><a href="https://www.nikkansports.com/baseball/professional/farm/">ファーム</a></li>
+<li><a href="https://www.nikkansports.com/baseball/highschool/">高校野球</a></li>
+<li><a href="https://www.nikkansports.com/baseball/amateur/">大学・社会人野球</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/baseball/mlb/">ＭＬＢ</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/baseball/mlb/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/baseball/mlb/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/baseball/mlb/japanese/">日本人選手</a></li>
+<li><a href="https://www.nikkansports.com/baseball/mlb/score/">スコア速報</a></li>
+<li><a href="https://www.nikkansports.com/baseball/mlb/data/standings/">順位表</a></li>
+<li><a href="https://www.nikkansports.com/baseball/mlb/data/stats/al-pitcher.html">個人成績</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/soccer/">サッカー</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/soccer/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/soccer/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/soccer/japan/">日本代表</a></li>
+<li><a href="https://www.nikkansports.com/soccer/jleague/j1/">Ｊ１</a></li>
+<li><a href="https://www.nikkansports.com/soccer/jleague/j2/">Ｊ２</a></li>
+<li><a href="https://www.nikkansports.com/soccer/jleague/j3/">Ｊ３</a></li>
+<li><a href="https://www.nikkansports.com/soccer/jleague/acl/">ＡＣＬ</a></li>
+<li><a href="https://www.nikkansports.com/soccer/jleague/jcup/">ルヴァン杯</a></li>
+<li><a href="https://www.nikkansports.com/soccer/russia2018/">Ｗ杯ロシア大会</a></li>
+<li><a href="https://www.nikkansports.com/soccer/emperorscup/">天皇杯</a></li>
+<li><a href="https://www.nikkansports.com/soccer/jleague/team/">チーム別</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/soccer/world/">海外サッカー</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/soccer/world/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/japanese/">日本人選手</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/italy/">セリエＡ</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/germany/">ブンデス</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/premier/">プレミア</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/spain/">スペイン</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/france/">フランス</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/netherlands/">オランダ</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/portugal/">ポルトガル</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/belgium/">ベルギー</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/scotland/">スコットランド</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/cl/">欧州ＣＬ</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/uefa/">欧州Ｌ</a></li>
+<li><a href="https://www.nikkansports.com/soccer/world/ecl/">ＥＣＬ</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/sports/">スポーツ</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/sports/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/sports/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/sports/athletics/">陸上</a></li>
+<li><a href="https://www.nikkansports.com/sports/swimming/">水泳</a></li>
+<li><a href="https://www.nikkansports.com/sports/judo/">柔道</a></li>
+<li><a href="https://www.nikkansports.com/sports/tennis/">テニス</a></li>
+<li><a href="https://www.nikkansports.com/sports/volley/">バレーボール</a></li>
+<li><a href="https://www.nikkansports.com/sports/rugby/">ラグビー</a></li>
+<li><a href="https://www.nikkansports.com/sports/figure/">フィギュアスケート</a></li>
+<li><a href="https://www.nikkansports.com/sports/basketball/">バスケットボール</a></li>
+<li><a href="https://www.nikkansports.com/sports/cycling/">自転車</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/olympic/">五輪</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/olympic/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/olympic/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/olympic/tokyo2020/">東京五輪</a></li>
+<li><a href="https://www.nikkansports.com/olympic/beijing2022/">北京五輪</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/sports/golf/">ゴルフ</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/sports/golf/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/sports/golf/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/sports/golf/jpmen/">国内男子</a></li>
+<li><a href="https://www.nikkansports.com/sports/golf/jpwomen/">国内女子</a></li>
+<li><a href="https://www.nikkansports.com/sports/golf/usmen/">米国男子</a></li>
+<li><a href="https://www.nikkansports.com/sports/golf/uswomen/">米国女子</a></li>
+<li><a href="https://www.nikkansports.com/sports/golf/jpsenior/">国内シニア</a></li>
+</ul>
+</div>
+
+</div>
+
+
+
+<div class="fl-r">
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/battle/">相撲・格闘技</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/battle/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/battle/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/battle/sumo/">大相撲</a></li>
+<li><a href="https://www.nikkansports.com/battle/sumo/score/">取組速報</a></li>
+<li><a href="https://www.nikkansports.com/battle/prowrestling/">プロレス</a></li>
+<li><a href="https://www.nikkansports.com/battle/boxing/">ボクシング</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://p.nikkansports.com/goku-uma/index.zpl?utm_source=nikkancom&utm_medium=owned&utm_campaign=nikkancom150302">競馬</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://p.nikkansports.com/goku-uma/news/index.zpl?utm_source=nikkancom&utm_medium=owned&utm_campaign=nikkancom150302">ニュース</a></li>
+<li><a href="https://p.nikkansports.com/goku-uma/news/index_photo.zpl?utm_source=nikkancom&utm_medium=owned&utm_campaign=nikkancom150302">写真ニュース</a></li>
+<li><a href="https://p.nikkansports.com/goku-uma/guide/column/index.zpl?utm_source=nikkancom&utm_medium=owned&utm_campaign=nikkancom150302">競馬コラム</a></li>
+<li><a href="https://p.nikkansports.com/goku-uma/guide/schedule/index.zpl?utm_source=nikkancom&utm_medium=owned&utm_campaign=nikkancom150302">重賞日程</a></li>
+<li><a href="https://p.nikkansports.com/goku-uma/guide/sample/index.zpl?utm_source=nikkancom&utm_medium=owned&utm_campaign=nikkancom150302">極ウマ有料情報ガイド</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/public_race/">ボート競輪オート</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/public_race/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/public_race/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/public_race/boat/">ボート</a></li>
+<li><a href="https://www.nikkansports.com/public_race/keirin/">競輪</a></li>
+<li><a href="https://www.nikkansports.com/public_race/auto/">オート</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/entertainment/">芸能</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/entertainment/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/photonews/">写真ニュース</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/akb48/">ＡＫＢ４８</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/nogizaka46/">坂道</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/johnnys/">ジャニーズ</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/hollywood/">ハリウッド</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/korea/">韓国エンタメ</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/romance/">結婚・熱愛</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/split/">離婚・破局</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/cinema/">映画</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/drama/">ドラマ</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/incident/">事件・事故</a></li>
+<li><a href="https://www.nikkansports.com/entertainment/fortune/">占い</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/general/">社会</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/general/news/">ニュース</a></li>
+<li><a href="https://www.nikkansports.com/general/photonews/">写真ニュース</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://athleterecipe.com/">アスレシピ</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://athleterecipe.com/column">コラム</a></li>
+<li><a href="https://athleterecipe.com/recipe">レシピ</a></li>
+<li><a href="https://athleterecipe.com/column/writer">専門家</a></li>
+<li><a href="https://athleterecipe.com/column/mama">特派員</a></li>
+<li><a href="https://athleterecipe.com/otona">おとな</a></li>
+<li><a href="https://athleterecipe.com/news">ニュース</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/leisure/">釣り・趣味・旅</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/leisure/fishing/news/">釣りニュース</a></li>
+<li><a href="https://www.nikkansports.com/leisure/fishing/photonews/">釣り写真</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title"><a href="https://www.nikkansports.com/amusement/">アミューズメント</a></h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/amusement/esports/">eスポーツ</a></li>
+<li><a href="https://www.nikkansports.com/amusement/pachislot/">パチンコ・パチスロ</a></li>
+<li><a href="https://www.nikkansports.com/amusement/jong/">麻雀</a></li>
+</ul>
+</div>
+
+<div class="footer_genre-box">
+<h3 class="footer_genre-title">ピックアップ</h3>
+<ul class="footer_genre-nav">
+<li><a href="https://www.nikkansports.com/feature/">特集一覧</a></li>
+<li><a href="https://www.nikkansports.com/column/">コラム一覧</a></li>
+<li><a href="https://www.nikkansports.com/rss/">RSS一覧</a></li>
+<li><a href="http://www.rakuten.ne.jp/gold/nikkansports-shopping/">ショッピング</a></li>
+<li><a href="https://www.nikkansports.com/tool/pay/top-pay.html">有料サイト</a></li>
+<li><a href="https://www.nikkansports.com/tool/copy/top-copy.html">プリントサービス</a></li>
+</ul>
+</div>
+
+</div>
+</nav>
+
+
+
+
+<hr class="hide">
+
+
+
+<nav class="footer_site-nav clm-2">
+
+<div class="clm-box fl-l">
+<dl class="footer_company-nav">
+<dt>
+<img src="https://www.nikkansports.com/mod2015/img/logo/logo_header_nikkansportscom.png" width="120" alt="日刊スポーツ">
+</dt>
+<dd>
+<a href="https://www.nikkansports.com/company/">会社案内</a>
+<a href="https://www.nikkansports.com/recruit/">採用情報</a>
+<a href="https://www.nikkansports.com/advertising/top-advertising.html">広告ガイド</a>
+<a href="https://www.nikkansports.com/policy/sitepolicy.html">サイトポリシー</a>
+<a href="https://www.nikkansports.com/policy/linkpolicy.html">リンクポリシー</a>
+<a href="https://www.nikkansports.com/policy/copyright.html">著作権について</a>
+<a href="https://www.nikkansports.com/company/top-paper-applicationform.html">紙面利用について</a>
+</dd>
+</dl>
+</div>
+
+
+
+<div class="clm-box fl-r">
+<aside id="otherCopyright">
+<h4>データ提供</h4>
+<dl class="copyright-list">
+<dt>日本プロ野球(NPB)：</dt>
+<dd>NPB・BIS</dd>
+</dl>
+
+<dl class="copyright-list">
+<dt>欧州サッカー：</dt>
+<dd>Powered by ORTEC</dd>
+</dl>
+<dl class="copyright-list">
+<dt>ＭＬＢ：</dt>
+<dd>(C) 2021 Sportradar AG, St. Gallen, Switzerland</dd>
+</dl>
+<dl class="copyright-list">
+<dt>アマチュア野球：</dt>
+<dd>(株)Omyu Technology</dd>
+</dl>
+</aside>
+</div>
+
+</nav>
+
+</section><!-- /footerSiteNav -->
+
+
+
+<section id="footerCopyright">
+<p class="footer_copyright">
+(C)2022,Nikkan Sports News.
+<span>nikkansports.comに掲載の記事・写真・カット等の転載を禁じます。すべての<a href="https://www.nikkansports.com/policy/copyright.html">著作権</a>は日刊スポーツNEWSに帰属します。</span>
+</p>
+</section><!-- /footerCopyright -->
+
+
+
+</footer>
+
+<!-------- ▲footer -------->
+
+
+</div>
+<!---------------- ▲wrapper -------->
+
+<!---------------- ▼GAUGG -------->
+<script type="text/javascript" src="/goku-uma/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/goku-uma/js/chat/lib/autosize.min.js"></script>
+<script type="text/javascript" src="/goku-uma/js/chat/lib/jquery.gauss-chat.js"></script>
+<script type="text/javascript" src="/goku-uma/js/chat/chatbot.js"></script>
+<link rel="stylesheet" type="text/css" href="/goku-uma/js/chat/lib/jquery.gauss-chat.css">
+<link rel="stylesheet" type="text/css" href="/goku-uma/js/chat/chatbot.css">
+
+<!---------------- ▲GAUGG -------->
+</body>
+</html>
